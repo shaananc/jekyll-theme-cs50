@@ -5,122 +5,100 @@
     <head>
 
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
 
-        <meta property="og:description" content="{{ site.description }}">
+        {%- if page.refresh -%}
+        <meta content="{{ page.refresh }}" http-equiv="refresh">
+        {%- endif -%}
 
-        <meta property="og:image" content="{{ site.image }}">
+        <meta property="og:description" content="{{ page.description | default: site.cs50.description }}">
+
+        <meta property="og:image" content="{{ page.image | default: site.cs50.image }}">
 
         {%- capture title -%}
             {%- if page.title -%}
                 {{- page.title -}}
             {%- endif -%}
-            {%- if site.title -%}
-                {%- unless site.github and site.title == site.github.repository_name -%}
+            {%- if site.cs50.title -%}
+                {%- unless site.github and site.cs50.title == site.github.repository_name -%}
                     {%- if page.title %} - {% endif -%}
-                    {{- site.title -}}
+                    {{- site.cs50.title -}}
                 {%- endunless -%}
             {%- endif -%}
-        {%- endcapture %}
+        {%- endcapture -%}
 
         <meta property="og:title" content="{{ title }}">
 
-        <meta property="og:url" content="{{ site.url }}">
+        {% include head.html %}
 
-        <link href="{{ '/favicon.ico' | relative_url }}?{{ site.time | date: '%s' }}" rel="icon">
+        {%- assign time = site.time | date: '%s' -%}
+
+        <link href="{{ site.baseurl }}/favicon.ico" rel="icon">
+
+        <!-- https://fonts.google.com/specimen/PT+Sans?query=PT+Sans&selection.family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700 -->
+        <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+
+        <!-- http://getbootstrap.com/docs/4.6/getting-started/introduction/ -->
+        <script src="{{ site.baseurl }}/assets/jquery/dist/jquery.min.js"></script>
+        <script src="{{ site.baseurl }}/assets/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- https://bootstrap-table.com/docs/getting-started/introduction/ -->
+        <link href="{{ site.baseurl }}/assets/bootstrap-table/dist/bootstrap-table.min.css" rel="stylesheet">
+        <script src="{{ site.baseurl }}/assets/bootstrap-table/dist/bootstrap-table.min.js"></script>
+        <script src="{{ site.baseurl }}/assets/bootstrap-table/dist/extensions/mobile/bootstrap-table-mobile.min.js"></script>
 
         <!-- https://fontawesome.com/how-to-use/on-the-web/referencing-icons/basic-use -->
-        <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" rel="stylesheet">
+        <link href="{{ site.baseurl }}/assets/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 
-        <link href="{{ '/assets/css/style.css' | relative_url }}?{{ site.time | date: '%s' }}" rel="stylesheet">
+        <!-- https://moment.github.io/luxon/ -->
+        <script src="{{ site.baseurl }}/assets/luxon.min.js"></script>
 
-        <!-- http://getbootstrap.com/docs/4.3/getting-started/introduction/ -->
-        <script crossorigin="anonymous" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <!-- http://docs.mathjax.org/ -->
+        <!-- https://www.jsdelivr.com/package/npm/mathjax?path=es5 -->
+        <script crossorigin="anonymous" integrity="sha256-+nfSJ1LiSvANSK3wvi6FjM+oFwoIQvURU1frozp5z6o=" src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-chtml.js"></script>
+
+        <!-- https://github.com/verlok/vanilla-lazyload -->
+        <script src="https://cdn.jsdelivr.net/npm/intersection-observer@0.7.0/intersection-observer.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.0/dist/lazyload.min.js"></script>
+
+        <!-- https://github.com/davidjbradshaw/iframe-resizer -->
+        <!-- https://www.jsdelivr.com/package/npm/iframe-resizer?path=js -->
+        <script crossorigin="anonymous" integrity="sha256-S8f0Q/V9VcfrqYgWo9EFS9zuDMdPTBMC+CBW0RjxQbs=" src="https://cdn.jsdelivr.net/npm/iframe-resizer@4.3.1/js/iframeResizer.min.js"></script>
+
+        <!-- https://github.com/scratchblocks/scratchblocks/releases -->
+        <script src="{{ site.baseurl }}/assets/scratchblocks.min.js"></script>
+
+        {% if site.algolia -%}
+        <!-- https://www.algolia.com/doc/guides/building-search-ui/installation/js/ -->
+        <script src="{{ site.baseurl }}/assets/algoliasearch/dist/algoliasearch-lite.umd.js"></script>
+        <script src="{{ site.baseurl }}/assets/instantsearch.js/dist/instantsearch.production.min.js"></script>
+        {%- endif %}
+
+        <link href="{{ site.baseurl }}{{ '/assets/' | append: page.layout | append: '.css' }}" rel="stylesheet">
+        <script src="{{ site.baseurl }}/assets/jekyll-theme-cs50.js"></script>
 
         <script>
-
-            $(document).on('DOMContentLoaded', function() {
-
-                // Get headings
-                let $headings = $([
-                    'main.markdown-body h2',
-                    'main.markdown-body h3',
-                    'main.markdown-body h4',
-                    'main.markdown-body h5',
-                    'main.markdown-body h6'].join(','));
-
-                // Add anchors to headings
-                $headings.each(function(index, element) {
-                    if ($(element).attr('id') && $(element).has('a').length === 0) {
-                        $(element).wrapInner($('<a data-id href="#' + $(element).attr('id') + '"></a>'));
-                    }
-                });
-
-                // For each iframe
-                $('iframe').each(function(index, element) {
-
-                    // Ensure responsive in Safari on iOS (for, e.g., Google Calendars), per https://stackoverflow.com/a/23083463/5156190
-                    if (!$(this).attr('scrolling')) {
-                        $(this).attr('scrolling', 'no');
-                    }
-
-                    // If an embedded YouTube video
-                    let matches = $(this).attr('src').match(/^https:\/\/www.youtube.com\/embed\/([A-Za-z0-9_-]+)/);
-                    if (matches) {
-
-                        // Add allowfullscreen if not present
-                        if ($(this).attr('allowfullscreen') === undefined) {
-                            $(this).attr('allowfullscreen', '');
-                        }
-
-                        // Add modifier classes if not present, assuming 16x9 by default
-                        if (!$(this).hasClass('embed-responsive-item')) {
-                            $(this).addClass('embed-responsive-item');
-                            $(this).wrap('<div class="embed-responsive embed-responsive-16by9"></div>');
-                        }
-
-                        // Add background image for printing
-                        // https://stackoverflow.com/a/2068371/5156190
-                        if ($(this).css('background-image') === 'none') {
-                            $(this).css('background-image', 'url("https://img.youtube.com/vi/' + matches[1] + '/sddefault.jpg")');
-                            $(this).css('background-repeat', 'no-repeat');
-                            $(this).css('background-size', 'cover');
-                        }
-                    }
-                });
-
-                // Ensure last heading can be anchored atop page
-                $(window).resize(function() {
-                    let last = $headings.last();
-                    if (last.length) {
-
-                        // On small devices
-                        if ($('aside').position().top < $('main').position().top) {
-                            var margin = $(window).height() - ($('main').outerHeight() + $('aside').outerHeight() - last.offset().top);
-                        }
-
-                        // On large devices
-                        else {
-                            var margin = $(window).height() - ($('main').outerHeight() - last.offset().top);
-                        }
-
-                        // Update margin
-                        $('main').css('margin-bottom', Math.max(0, Math.ceil(margin)) + 'px');
-                    }
-                });
-                $(window).trigger('resize');
-
-            });
-
+            window.CS50 = {
+                local: {{ site.cs50.local | jsonify }},
+                locale: {{ site.cs50.locale | jsonify }},
+                tz: {{ site.cs50.tz | jsonify }}
+            };
         </script>
 
         <title>{{ title }}</title>
 
+
     </head>
 
-    <body>
+    <body class="invisible">
+
+        {% if site.cs50.alert %}
+        {%- capture alert -%}{%- include alert.md -%}{%- endcapture -%}
+        <div class="alert fixed-top mb-0 rounded-0 shadow" data-alert="{{ site.cs50.alert }}" data-hash="{{ alert | md5 }}" id="alert" role="alert">
+            <button aria-label="Close" class="btn-close d-none" data-bs-dismiss="alert" type="button"></button>
+            {{- alert | markdownify | replace: " id=", " data-id=" | strip -}}
+        </div>
+        {% endif %}
 
         <div class="container-fluid">
 
@@ -135,9 +113,17 @@
 
                     </header>
 
-                    <button aria-controls="nav" aria-expanded="false" class="btn btn-sm collapsed d-md-none" data-target="aside > nav" data-toggle="collapse">Menu</button>
+                    {% if site.algolia -%}
+                    <button class="btn btn-link d-block ps-0 pt-0" data-search data-bs-target="#search" data-bs-toggle="modal" type="button">
+                        <i class="fas fa-search pe-2"></i>Search
+                    </button>
+                   {%- endif %}
 
-                    <nav class="collapse d-md-block">
+                    <button aria-controls="nav" aria-expanded="false" class="btn btn-sm collapsed d-md-none" data-bs-target="aside > nav" data-bs-toggle="collapse">
+                        Menu
+                    </button>
+
+                    <nav class="collapse d-md-block" id="nav">
 
                         {%- capture nav -%}{%- include nav.md -%}{%- endcapture -%}
                         {{- nav | markdownify | replace: " id=", " data-id=" | strip -}}
@@ -153,7 +139,7 @@
 
                 </aside>
 
-                <main class="col-md markdown-body">
+                <main class="col-md-8 col-12 ">
 
                     {{ content }}
 
@@ -162,6 +148,148 @@
             </div>
 
         </div>
+
+        {% if site.algolia -%}
+        <div aria-hidden="true" aria-labelledby="searchTitle" class="markdown-body modal" id="search" role="dialog" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="pe-3 w-100" id="searchbox"></div>
+                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="hits"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+
+            // Before shwoing searchbox
+            $('#search').on('show.bs.modal', function (e) {
+
+                // Client
+                const searchClient = algoliasearch('{{ site.algolia.application_id }}', '{{ site.algolia.search_only_api_key }}');
+                const search = instantsearch({
+                    indexName: '{{ site.algolia.index_name }}',
+                    searchClient: searchClient,
+                    searchFunction: function(helper) { // https://www.algolia.com/doc/guides/building-search-ui/going-further/conditional-display/js/#handling-empty-queries
+                        const hits = $('#hits');
+                        if (helper.state.query === '') {
+                            hits.hide();
+                            return;
+                        }
+                        helper.search();
+                        hits.show();
+                    }
+                });
+
+                // searchBox
+                // https://www.algolia.com/doc/api-reference/widgets/search-box/js/
+                search.addWidget(
+                    instantsearch.widgets.searchBox({
+                        container: '#searchbox',
+                        cssClasses: {
+                            input: 'form-control'
+                        },
+                        placeholder: 'Search',
+                        showLoadingIndicator: false,
+                        showReset: false,
+                        showSubmit: false
+                    })
+                );
+
+                // hits
+                // https://www.algolia.com/doc/api-reference/widgets/hits/js/
+                search.addWidget(
+                    instantsearch.widgets.hits({
+                        container: '#hits',
+                        templates: {
+                            item: function(hit) {
+
+                                // url
+                                if (window.baseurl) {
+                                    var url = window.baseurl + hit.url;
+                                }
+                                else {
+                                    var url = hit.url;
+                                }
+                                if (hit.anchor) {
+                                    url += '#' + hit.anchor;
+                                }
+
+                                // title
+                                if (hit._highlightResult && hit._highlightResult.headings) {
+                                    var title = hit._highlightResult.headings[hit._highlightResult.headings.length - 1].value;
+                                }
+                                else if (hit._highlightResult && hit._highlightResult.title) {
+                                    var title = hit._highlightResult.title.value;
+                                }
+                                else if (hit.headings) {
+                                    var title = hit.headings[hit.headings.length - 1].value;
+                                }
+                                else if (hit.title) {
+                                    var title = hit.title;
+                                }
+                                else {
+                                    var title = url;
+                                }
+
+                                // content
+                                if (hit._highlightResult && hit._highlightResult.content) {
+                                    var content = hit._highlightResult.content.value;
+                                }
+                                else if (hit._highlightResult && hit._highlightResult.title) {
+                                    var content = hit._highlightResult.title.value;
+                                }
+                                else {
+                                    var content = hit.excerpt_text;
+                                }
+
+                                // Template for hit
+                                return '<h2 class="font-weight-bold h3 mb-0">' +
+                                       '<a href="' + url + '">' +
+                                       title +
+                                       '</a>' +
+                                       '</h2>' +
+                                       '<p class="mb-0">' +
+                                       '<a class="text-muted" href="' + url + '">' +
+                                       url +
+                                       '</a>' +
+                                       '</p>' +
+                                       '<p>' + 
+                                       content +
+                                       '</p>';
+                            }
+                        }
+                    })
+                );
+
+                // poweredBy
+                search.addWidget(
+                    instantsearch.widgets.poweredBy({
+                        container: '#search .modal-footer'
+                    })
+                );
+
+                // Let user start searching
+                search.start();
+
+                // Resize form
+                $(window).trigger('resize');
+            });
+
+            // After showing searchbox
+            $('#search').on('shown.bs.modal', function (e) {
+                $('#searchbox input[type=search]').focus();
+            });
+
+        </script>
+        {% endif %}
+ 
+        <script src="{{ site.baseurl }}/assets/page.js"></script>
 
     </body>
 
