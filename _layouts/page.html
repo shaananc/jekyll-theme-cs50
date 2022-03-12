@@ -92,9 +92,9 @@
 
     <body class="invisible">
 
-        <div class="alert fixed-top mb-0 rounded-0 shadow" data-alert="{{ site.cs50.alert }}" data-hash="" id="alert" role="alert">
+        <div class="alert fixed-top mb-0 rounded-0 shadow p-0" data-alert="{{ site.cs50.alert }}" data-hash="{{ alert | md5 }}" id="alert" role="alert">
             <button aria-label="Close" class="btn-close d-none" data-bs-dismiss="alert" type="button"></button>
-            <div style="background-color: #005bbb; height: 29px;">
+            <div style="background-color: #005bbb; height: 29px; text-align:center">
                 <a class="d-block h-100 alert-link" href="https://www.npr.org/2022/02/25/1082992947/ukraine-support-help" style="color: #fff">
                 <i class="fas fa-info-circle" style="margin-top: .33rem"></i>
                 </a>
