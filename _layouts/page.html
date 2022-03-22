@@ -212,7 +212,8 @@
                         placeholder: 'Search',
                         showLoadingIndicator: false,
                         showReset: false,
-                        showSubmit: false
+                        showSubmit: false,
+                        poweredBy: true
                     })
                 );
 
@@ -282,12 +283,12 @@
                     })
                 );
 
-                // poweredBy
-                search.addWidget(
-                    instantsearch.widgets.poweredBy({
-                        container: '#search .modal-footer'
-                    })
-                );
+                // // poweredBy
+                // search.addWidget(
+                //     instantsearch.widgets.poweredBy({
+                //         container: '#search .modal-footer'
+                //     })
+                // );
 
                 // Let user start searching
                 search.start();
