@@ -69,9 +69,10 @@
         <script src="{{ site.baseurl }}/assets/scratchblocks.min.js"></script>
 
         {% if site.algolia -%}
-        <!-- https://www.algolia.com/doc/guides/building-search-ui/installation/js/ -->
-        <script src="{{ site.baseurl }}/assets/algoliasearch/dist/algoliasearch-lite.umd.js"></script>
-        <script src="{{ site.baseurl }}/assets/instantsearch.js/dist/instantsearch.production.min.js"></script>
+        <!-- Including InstantSearch.js library and styling -->
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch-theme-algolia.min.css">
         {%- endif %}
 
 
@@ -185,9 +186,10 @@
             $('#search').on('show.bs.modal', function (e) {
 
                 // Client
-                const searchClient = algoliasearch('{{ site.algolia.application_id }}', '{{ site.algolia.search_only_api_key }}');
                 const search = instantsearch({
                     indexName: '{{ site.algolia.index_name }}',
+                    apiKey: '{{ site.algolia.search_only_api_key }}',
+                    appId: '{{ site.algolia.application_id }}',
                     searchClient: searchClient,
                     searchFunction: function(helper) { // https://www.algolia.com/doc/guides/building-search-ui/going-further/conditional-display/js/#handling-empty-queries
                         const hits = $('#hits');
