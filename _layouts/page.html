@@ -190,7 +190,6 @@
                     indexName: '{{ site.algolia.index_name }}',
                     apiKey: '{{ site.algolia.search_only_api_key }}',
                     appId: '{{ site.algolia.application_id }}',
-                    searchClient: searchClient,
                     searchFunction: function(helper) { // https://www.algolia.com/doc/guides/building-search-ui/going-further/conditional-display/js/#handling-empty-queries
                         const hits = $('#hits');
                         if (helper.state.query === '') {
