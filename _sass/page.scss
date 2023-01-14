@@ -5,9 +5,8 @@ html {
     font-size: 16px;
 }
 
-// So that main's height doesn't grow to fill viewport, which breaks addition of margin-bottom for last headings
 body > div.container-fluid > div.row {
-    align-items: flex-start;
+    align-items: stretch;
 }
 
 // Crimson background, transparent text
