@@ -44,13 +44,34 @@ aside.col-md {
 @include media-breakpoint-up(md) {
     @media screen {
         aside.col-md {
-            flex: 0 1 20rem;
+            flex: 0 1 15rem;
             overflow-y: auto;
             position: sticky;
             z-index: $zindex-sticky - 1;	
         }
     }
 }
+
+
+// Fixed width, scroll on larger devices
+@include media-breakpoint-up(lg) {
+    @media screen {
+        aside.col-md {
+            flex: 0 1 20rem;
+            overflow-y: auto;
+            position: sticky;
+            z-index: $zindex-sticky - 1;	
+        }
+        .aside-text-center{
+            text-align: center !important;
+        }
+    }
+    
+}
+
+
+
+
 
 // Opaque text
 aside a,

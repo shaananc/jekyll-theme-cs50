@@ -77,27 +77,20 @@
         href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch-theme-algolia.min.css"> {%- endif
     %}
 
+    <!-- https://mermaid-js.github.io/ -->
+    <!-- https://www.jsdelivr.com/package/npm/mermaid -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@9.3.0/dist/mermaid.min.js"
+        integrity="sha256-QdTG1YTLLTwD3b95jLqFxpQX9uYuJMNAtVZgwKX4oYU=" crossorigin="anonymous"></script>
+
 
     <link href="{{ site.baseurl }}/assets/page.css" rel="stylesheet">
     <script src="{{ site.baseurl }}/assets/jekyll-theme-cs50.js"></script>
 
     <script>
         window.CS50 = {
-            local: {
-                {
-            site.cs50.local | jsonify
-        }
-            },
-        locale: {
-            {
-                site.cs50.locale | jsonify
-            }
-        },
-        tz: {
-            {
-                site.cs50.tz | jsonify
-            }
-        }
+            local: {{ site.cs50.local | jsonify }},
+        locale: {{ site.cs50.locale | jsonify }},
+        tz: {{ site.cs50.tz | jsonify }}
         };
     </script>
 
