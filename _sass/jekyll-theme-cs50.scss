@@ -19,7 +19,7 @@ $headings-font-weight: bold;
 
 // Dark mode
 // https://getbootstrap.com/docs/5.3/customize/color-modes/#building-with-sass
-$color-mode-type: media-query;
+$color-mode-type: data;
 
 // Import Bootstrap
 @import "bootstrap/scss/bootstrap.scss";
