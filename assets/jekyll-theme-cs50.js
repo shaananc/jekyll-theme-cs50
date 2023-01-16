@@ -254,30 +254,7 @@ $(document).on('DOMContentLoaded', function() {
 
         // Display HTML
         $(this).html(html);
-
-        // Inject clock after date-local (and, if date-local is inside a link, outside that link)
-        const $clock = $('<a data-clock href="https://time.cs50.io/' + local + '"><i class="far fa-clock" title="CS50 Time Converter"></i></a>');
-        const $closest = $(this).closest('a');
-        if ($closest.length) {
-            $closest.after($clock);
-        }
-        else {
-            $(this).after($clock);
-        }
     });
-
-    // Toggle clocks on hover
-    const enableClocks = function(element) {
-        $('[data-clock]').each(function(index, element) {
-            $(element).on('mouseover', function() {
-                $(element).find('.fa-clock').removeClass('far').addClass('fas');
-            });
-            $(element).on('click mouseout', function() {
-                $(element).find('.fa-clock').removeClass('fas').addClass('far');
-            });
-        });
-    };
-    enableClocks();
 
     // Enable tooltips
     const enableTooltips = function() {
@@ -290,7 +267,6 @@ $(document).on('DOMContentLoaded', function() {
     // Re-attach tooltips after tables have responded
     // https://github.com/wenzhixin/bootstrap-table/issues/572#issuecomment-76503607
     $('table').on('post-body.bs.table', function() {
-        enableClocks();
         enableTooltips();
     });
 
@@ -437,6 +413,25 @@ $(document).on('DOMContentLoaded', function() {
         }
     });
 
+    // Render Mermaid charts
+    mermaid.initialize({
+        theme: (window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'default'
+    });
+    $('code[class="language-mermaid"]').each(function(index, element) {
+
+        // Replace pre > code with div
+        const $element = $(element);
+        const $div = $('<div class="mermaid">').text($element.text());
+        $element.parent().replaceWith($div);
+
+        // Render chart
+        mermaid.init({}, $div.get(0));
+
+        // Left-align Mermaid, until https://github.com/mermaid-js/mermaid/issues/1983
+        // https://stackoverflow.com/a/6322799/5156190
+        $div.children('svg').attr('preserveAspectRatio', 'xMinYMin meet');
+    });
+
     // Render Scratch blocks
     scratchblocks.renderMatching('pre code.language-scratch', {
         style: 'scratch3'
@@ -455,15 +450,6 @@ $(document).on('DOMContentLoaded', function() {
         $(element).attr('height', height);
         $(element).parent().css('height', Math.ceil(element.getBoundingClientRect().height) + 'px');
     });
-
-    // If H1 is immediately followed H2 (and no other H2 siblings),
-    // treat H1 as title and H2 as subtitle, relocating in DOM as customized heading
-    // https://getbootstrap.com/docs/4.6/content/typography/#customizing-headings
-    const $title = $('main h1').first();
-    const $subtitle = $title.next('h2');
-    if ($title.length && $subtitle.length && !$subtitle.nextAll('h2').length) {
-        $title.append(' ').append($('<small>').addClass('text-muted').append($subtitle.detach().contents()));
-    }
 
     // Get headings
     const headings = $([
