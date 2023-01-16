@@ -258,8 +258,6 @@ module CS50
       # Parse optional argument
       if @args.length == 2
         t2 = CS50::strptime(@args[1], t1)
-        puts t1
-        puts t2
         if t2 < t1
           raise "Invalid interval: #{@markup}"
         end
@@ -267,8 +265,10 @@ module CS50
         path += "/" + CS50::format(t2)
       end
 
-      # Return
-      "<span data-local='#{local}'></span>"
+      # Return element
+      # Even though text node will be replaced by JavaScript, ensures Kramdown can
+      # assign an ID if this element is used as a heading
+      "<a data-local='#{local}' href='https://time.cs50.io/#{path}'>#{local}</a>"
     end
 
     Liquid::Template.register_tag("local", self)
@@ -327,7 +327,7 @@ module CS50
 
           # Supported components
           params = CGI::parse(URI::parse(@args[0]).query || "")
-          ["autoplay", "controls", "end", "index", "list", "mute", "playlist", "start", "t"].each do |param|
+          ["autoplay", "controls", "end", "index", "list", "modestbranding", "mute", "playlist", "rel", "showinfo", "start", "t"].each do |param|
 
             # If param was provided
             if params.key?(param)
@@ -381,6 +381,9 @@ module CS50
 end
 
 Jekyll::Hooks.register :site, :after_reset do |site|
+
+  # Override site.url so that jekyll-redirect-from doesn't prepend it
+  site.config["url"] = nil
 
   # Strip trailing slashes from site.baseurl
   unless site.config["baseurl"].nil?
@@ -472,10 +475,10 @@ Jekyll::Hooks.register [:site], :post_render do |site|
           # Parse url
           if node["content"] =~ /^(\d+;\s*url=["']?)(.+)(["']?)$/i
 
-            # If relative
-            if !/^#{URI::regexp}$/.match?($2)
+            # If a local path
+            if !/^#{URI::regexp}$/.match?($2) and !$2.start_with?("//")
 
-              # Rewrite path
+              # Resolve as relative path
               node["content"] = $1 + relative_path(page.dir, $2) + $3
             end
           end
@@ -488,8 +491,10 @@ Jekyll::Hooks.register [:site], :post_render do |site|
             # With a non-nil attribute
             if !node[attribute].nil?
 
-              # If not a URI (and thus a local path), resolve to relative path
-              if node[attribute] !~ /^#{URI::regexp}$/
+              # If a local path
+              if node[attribute] !~ /^#{URI::regexp}$/ and !node[attribute].start_with?("//")
+
+                # Resolve as relative path
                 node[attribute] = relative_path(page.dir, node[attribute])
               end
 
@@ -522,6 +527,23 @@ Jekyll::Hooks.register [:site], :post_render do |site|
     # https://github.com/jekyll/jekyll-mentions/blob/master/lib/jekyll-mentions.rb and
     # https://github.com/jekyll/jemoji/blob/master/lib/jemoji.rb
 
+  end
+end
+
+# https://github.com/jekyll/jekyll-redirect-from/blob/master/lib/jekyll-redirect-from/redirect_page.rb
+module JekyllRedirectFrom
+  class RedirectPage < Jekyll::Page
+    def set_paths(from, to)
+      @context ||= context
+      from = ensure_leading_slash(from)
+      data.merge!(
+        "permalink" => from,
+        "redirect" => {
+          "from" => from,
+          "to" => to # Omit call to absolute_url, else redirect_to misinterprets relative URLs as absolute from /
+        }
+      )
+    end
   end
 end
 

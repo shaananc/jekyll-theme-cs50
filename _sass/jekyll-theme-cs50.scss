@@ -3,7 +3,9 @@ $font-family-sans-serif: "PT Sans" !default;
 
 // Crimson links
 $link-color: #a51c30 !default;
+$link-color-dark: #ef9aa4 !default; // Passing lightness of #a51c30 foreground, against #212529 background, per https://webaim.org/resources/contrastchecker/
 $link-hover-color: $link-color !default;
+$link-hover-color-dark: $link-color-dark !default;
 
 // Headings
 // https://github.com/primer/css/blob/master/src/markdown/headings.scss
@@ -15,12 +17,25 @@ $h5-font-size: 0.875rem;
 $h6-font-size: 0.85rem;
 $headings-font-weight: bold;
 
+// Dark mode
+// https://getbootstrap.com/docs/5.3/customize/color-modes/#building-with-sass
+$color-mode-type: media-query;
+
 // Import Bootstrap
 @import "bootstrap/scss/bootstrap.scss";
 
-// GitHub syntax highlighter color scheme for Pygments
-// https://github.com/PhilipTrauner/pygments-github-css/blob/master/github.css
-@import "rouge";
+// Syntax highlighting from Pygments
+// https://pygments.org/styles/
+@media (prefers-color-scheme: dark) {
+    .highlight {
+        @import "github-dark";
+    }
+}
+@media (prefers-color-scheme: light) {
+    .highlight {
+        @import "default";
+    }
+}
 
 // Align badges
 .badge {
@@ -74,35 +89,24 @@ $headings-font-weight: bold;
 * {
     word-break: break-word;
 }
-button, table * {
+.btn, table * {
     word-break: normal;
 }
 
 // Offset links' underline
 a, .btn-link {
-    text-decoration: none;
-}
-a:hover:not(.btn), .btn-link:hover {
     text-decoration-line: underline;
     text-decoration-style: solid;
-    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
 }
-a[data-clock] {
+a[data-local] {
     color: inherit;
-}
-a[data-clock] .fa-clock {
-    display: inline;
-}
-a[data-clock]:hover {
-    text-decoration: none;
-}
-[data-clock]::before {
-    content: '\00a0';
 }
 
 // A la GitHub
 blockquote {
-    border-left-color: $gray-200;
+    border-left-color: $text-muted;
     border-left-style: solid;
     border-left-width: thick;
     color: $text-muted;
@@ -110,14 +114,13 @@ blockquote {
 }
 
 // A la GitHub
-code {
-    color: inherit;
-}
 code.highlighter-rouge {
-    background-color: $gray-100;
     @extend .border;
+    color: inherit;
     padding: calc(.2rem - 1px) .2rem;
 }
+
+// A la GitHub
 div.highlighter-rouge {
     margin-bottom: 1rem;
 }
@@ -125,6 +128,12 @@ li {
     div.highlighter-rouge {
         margin-bottom: 0;
     }
+}
+
+// Shrink Mermaid charts
+div.mermaid svg {
+    height: auto;
+    max-height: 100vh;
 }
 
 // Shrink Scratch blocks, a la http://scratchblocks.github.io/
@@ -150,9 +159,17 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     // Subtle anchors
     a[data-id] {
         color: inherit;
+        text-decoration: none;
     }
     a[data-id]:hover {
-        text-decoration: none;
+        color: inherit;
+    }
+
+    // Subtitles
+    em {
+        @extend .small;
+        @extend .text-muted;
+        font-style: normal;
     }
 }
 h1, h2, .h1, .h2 {
@@ -229,12 +246,12 @@ ol > li {
 // A la GitHub
 pre {
     @extend .border;
-    background-color: $gray-100;
     padding: .5rem .75rem;
 }
 
 // Prevent wrapping on iOS
 pre code span {
+    font-style: normal !important; // Override Pygments' italics
     white-space: pre;
 }
 

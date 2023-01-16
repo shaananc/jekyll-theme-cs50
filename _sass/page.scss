@@ -12,7 +12,7 @@ body > div.container-fluid > div.row {
 // Crimson background, transparent text
 aside {
     background-color: $link-color;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba($body-bg, 0.5);
     font-size: 1.125rem;
 }
 
@@ -28,6 +28,11 @@ aside {
     li:first-child, li + li {
         margin-top: 0;
     }
+}
+
+// No underlining
+aside a, aside .btn-link {
+    text-decoration: none;
 }
 
 // Override column's padding
@@ -50,30 +55,25 @@ aside.col-md {
 // Opaque text
 aside a,
 aside a:hover,
-aside button[data-bs-toggle=collapse],
-aside button[data-bs-toggle=collapse]:hover {
+aside .btn[data-bs-toggle=collapse],
+aside .btn[data-bs-toggle=collapse]:hover {
     background-color: inherit;
-    border-color: rgba(255, 255, 255, .5);
-    color: rgba(255, 255, 255, 1);
+    border-color: $body-bg;
+    color: $body-bg;
 }
-aside button[data-bs-toggle=modal],
-aside button[data-bs-toggle=modal]:hover {
-    color: rgba(255, 255, 255, 1);
-}
-
-// Opaque border
-aside button[data-bs-toggle=collapse]:hover {
-    border-color: rgba(255, 255, 255, 1);
+aside .btn[data-bs-toggle=modal],
+aside .btn[data-bs-toggle=modal]:hover {
+    color: $body-bg;
 }
 
 // Invert colors when not collapsed
-aside button[data-bs-toggle=collapse]:not(.collapsed) {
-    background-color: rgba(255, 255, 255, 1);
+aside .btn[data-bs-toggle=collapse]:not(.collapsed) {
+    background-color: $body-bg;
     color: $link-color;
 }
 
 aside hr {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba($body-bg, 0.5);
 }
 
 // Compact small paragraphs
@@ -87,8 +87,8 @@ aside .fa-ul {
 }
 
 // Separate buttons from header and nav
-aside button[data-bs-toggle=collapse],
-aside button[data-bs-toggle=modal] {
+aside .btn[data-bs-toggle=collapse],
+aside .btn[data-bs-toggle=modal] {
     margin-top: 1.25rem; // 0.25rem more than p tag, since button's text has 0.25rem padding
 }
 
@@ -180,6 +180,9 @@ main .alert .fa-ul {
     }
 
     // Less padding
+    aside.col-md {
+        padding-top: 1rem;
+    }
     main.col-md {
         padding: 2rem 2rem;
     }
@@ -211,7 +214,7 @@ main .alert .fa-ul {
     }
 
     // Hide button above nav
-    aside button[data-bs-toggle=collapse] {
+    aside .btn[data-bs-toggle=collapse] {
         display: none;
     }
 
