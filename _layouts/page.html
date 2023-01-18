@@ -90,8 +90,8 @@
     <script>
         window.CS50 = {
             local: {{ site.cs50.local | jsonify }},
-        locale: {{ site.cs50.locale | jsonify }},
-        tz: {{ site.cs50.tz | jsonify }}
+        locale: { { site.cs50.locale | jsonify } },
+        tz: { { site.cs50.tz | jsonify } }
         };
     </script>
 
@@ -169,8 +169,8 @@
             <main class="col-md-8 col-12 ">
 
                 {{ content }}
+                {%- include copyright.md -%}
             </main>
-            {%- include copyright.md -%}
 
 
         </div>
