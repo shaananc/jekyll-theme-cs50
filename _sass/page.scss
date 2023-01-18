@@ -5,6 +5,14 @@ html {
     font-size: 16px;
 }
 
+body > .container-fluid >.row > aside {
+    height: 100%;
+  }
+  
+  body > .container-fluid > .row > main {
+    height: 100%;
+  }
+
 body > div.container-fluid > div.row {
     align-items: stretch;
 }
