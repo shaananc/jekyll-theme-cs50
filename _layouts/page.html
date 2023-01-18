@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html lang="{{ page.lang | default: site.lang | default: " en-us " }}" data-bs-theme="auto">
@@ -90,8 +91,8 @@
     <script>
         window.CS50 = {
             local: {{ site.cs50.local | jsonify }},
-        locale: { { site.cs50.locale | jsonify } },
-        tz: { { site.cs50.tz | jsonify } }
+        locale: {{ site.cs50.locale | jsonify }},
+        tz: {{ site.cs50.tz | jsonify }}
         };
     </script>
 
