@@ -8,13 +8,13 @@ $link-hover-color: $link-color !default;
 $link-hover-color-dark: $link-color-dark !default;
 
 // Headings
-// https://github.com/primer/css/blob/master/src/markdown/headings.scss
+// Adapted from https://github.com/primer/css/blob/master/src/markdown/headings.scss
 $h1-font-size: 2rem;
-$h2-font-size: 1.5rem;
-$h3-font-size: 1.25rem;
-$h4-font-size: 1rem;
-$h5-font-size: 0.875rem;
-$h6-font-size: 0.85rem;
+$h2-font-size: 1.75rem;
+$h3-font-size: 1.5rem;
+$h4-font-size: 1.25rem;
+$h5-font-size: 1.125rem;
+$h6-font-size: 1.0625rem;
 $headings-font-weight: bold;
 
 // Dark mode
@@ -106,7 +106,7 @@ a[data-local] {
 
 // A la GitHub
 blockquote {
-    border-left-color: $text-muted;
+    border-left-color: var(--bs-tertiary-color);
     border-left-style: solid;
     border-left-width: thick;
     color: $text-muted;
@@ -119,9 +119,12 @@ code.highlighter-rouge {
     color: inherit;
     padding: calc(.2rem - 1px) .2rem;
 }
+.alert code.highlighter-rouge {
+    border-color: var(--bs-alert-border-color) !important;
+}
 
 // A la GitHub
-div.highlighter-rouge {
+div.highlighter-rouge, div.mermaid, div.scratchblocks {
     margin-bottom: 1rem;
 }
 li {
@@ -134,12 +137,6 @@ li {
 div.mermaid svg {
     height: auto;
     max-height: 100vh;
-}
-
-// Shrink Scratch blocks, a la http://scratchblocks.github.io/
-div.scratchblocks svg {
-    transform: scale(0.675);
-    transform-origin: 0 0;
 }
 
 // Details, summaries
@@ -205,6 +202,15 @@ iframe {
 // Confine images to parent
 img {
     max-width: 100%;
+}
+
+// Size the emoji according to the surrounding text
+// https://github.com/twitter/twemoji#inline-styles
+img.emoji {
+    height: 1em;
+    margin: 0 .05em 0 .1em;
+    vertical-align: -0.1em;
+    width: 1em;
 }
 
 // A la GitHub
