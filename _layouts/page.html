@@ -53,14 +53,14 @@
             }
         };
     </script>
-    <script src="/assets/mathjax/es5/tex-chtml.js?{{ time }}"></script>
+    <script src="{{ site.baseurl }}/assets/mathjax/es5/tex-chtml.js?{{ time }}"></script>
 
     <!-- https://github.com/verlok/vanilla-lazyload -->
-    <script src="/assets/intersection-observer/intersection-observer.js?{{ time }}"></script>
-    <script src="/assets/vanilla-lazyload/dist/lazyload.min.js?{{ time }}"></script>
+    <script src="{{ site.baseurl }}/assets/intersection-observer/intersection-observer.js?{{ time }}"></script>
+    <script src="{{ site.baseurl }}/assets/vanilla-lazyload/dist/lazyload.min.js?{{ time }}"></script>
 
     <!-- https://github.com/davidjbradshaw/iframe-resizer -->
-    <script src="/assets/iframe-resizer/js/iframeResizer.min.js?{{ time }}"></script>
+    <script src="{{ site.baseurl }}/assets/iframe-resizer/js/iframeResizer.min.js?{{ time }}"></script>
 
     <!-- https://github.com/scratchblocks/scratchblocks/releases -->
     <script src="{{ site.baseurl }}/assets/scratchblocks.min.js"></script>
@@ -75,10 +75,10 @@
     %}
 
     <!-- https://mermaid-js.github.io/ -->
-    <script src="/assets/mermaid.min.js?{{ time }}"></script>
+    <script src="{{ site.baseurl }}/assets/mermaid.min.js?{{ time }}"></script>
 
     <!-- https://github.com/twitter/twemoji -->
-    <script src="/assets/twemoji/dist/twemoji.min.js?{{ time }}"></script>
+    <script src="{{ site.baseurl }}/assets/twemoji/dist/twemoji.min.js?{{ time }}"></script>
 
 
     <link href="{{ site.baseurl }}/assets/page.css" rel="stylesheet">
@@ -87,8 +87,8 @@
     <script>
         window.CS50 = {
             local: {{ site.cs50.local | jsonify }},
-        locale: { { site.cs50.locale | jsonify } },
-        tz: { { site.cs50.tz | jsonify } }
+        locale: {{ site.cs50.locale | jsonify }},
+        tz: {{ site.cs50.tz | jsonify }}
         };
     </script>
 
