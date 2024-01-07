@@ -74,3 +74,5 @@ assets/popper.js/dist/umd/*
 !assets/popper.js/dist/umd/popper.min.js
 
 node_modules/
+
+vendor/
