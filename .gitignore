@@ -22,7 +22,7 @@ _site/
 assets/algoliasearch/*
 !assets/algoliasearch/dist/
 assets/algoliasearch/dist/*
-!assets/algoliasearch/dist/algoliasearch-lite.umd.js
+!assets/algoliasearch/dist/algoliasearch.umd.js
 
 assets/bootstrap/*
 !assets/bootstrap/LICENSE
