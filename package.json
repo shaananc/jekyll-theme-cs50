@@ -1,16 +1,16 @@
 {
   "dependencies": {
     "@fortawesome/fontawesome-free": "6.7.2",
-    "algoliasearch": "5.20.4",
+    "algoliasearch": "5.23.0",
     "bootstrap": "5.3.3",
     "bootstrap-table": "1.24.1",
-    "iframe-resizer": "5.3.3",
-    "instantsearch.js": "4.78.0",
+    "iframe-resizer": "5.4.0",
+    "instantsearch.js": "4.78.1",
     "intersection-observer": "0.12.2",
     "jquery": "3.7.1",
-    "luxon": "3.5.0",
+    "luxon": "3.6.0",
     "mathjax": "3.2.2",
-    "mermaid": "11.4.1",
+    "mermaid": "11.6.0",
     "twemoji": "14.0.2",
     "vanilla-lazyload": "19.1.3"
   },
