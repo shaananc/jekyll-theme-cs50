@@ -14,6 +14,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "base64"
   spec.add_runtime_dependency "bigdecimal"
+  spec.add_runtime_dependency "csv"
   spec.add_runtime_dependency "deep_merge", "1.2.2"
   spec.add_runtime_dependency "jekyll", "4.3.4"
   spec.add_runtime_dependency "jekyll-sass-converter", "2.2.0" # https://github.com/jekyll/jekyll-sass-converter#dropped-support-of-importing-files-with-the-same-filename-as-their-parent-file
