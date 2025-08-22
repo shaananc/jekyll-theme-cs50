@@ -59,14 +59,20 @@
 
         <!-- http://docs.mathjax.org/ -->
         <!-- http://docs.mathjax.org/en/latest/options/output/chtml.html?highlight=displayAlign#the-configuration-block -->
+        <!-- https://docs.mathjax.org/en/latest/output/fonts.html -->
         <script>
             MathJax = {
-               chtml: {
-                    displayAlign: "left"
+                loader: {
+                    paths: {
+                        'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+                    }
+                },
+                output: {
+                    displayAlign: 'left'
                 }
             };
         </script>
-        <script src="/assets/mathjax/es5/tex-chtml.js?{{ time }}"></script>
+        <script src="/assets/mathjax/tex-mml-chtml.js?{{ time }}"></script>
 
         <!-- https://github.com/verlok/vanilla-lazyload -->
         <script src="/assets/intersection-observer/intersection-observer.js?{{ time }}"></script>
@@ -82,7 +88,7 @@
         <script src="/assets/mermaid.min.js?{{ time }}"></script>
 
         <!-- https://github.com/twitter/twemoji -->
-        <script src="/assets/twemoji/dist/twemoji.min.js?{{ time }}"></script>
+        <script src="/assets/@twemoji/api/dist/twemoji.min.js?{{ time }}"></script>
 
         {% if site.algolia -%}
         <!-- https://www.algolia.com/doc/guides/building-search-ui/installation/js/ -->
