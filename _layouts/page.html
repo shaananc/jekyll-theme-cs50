@@ -18,31 +18,31 @@
     <meta property="og:title" content="{{ title }}"> {% include head.html %} {%- assign time = site.time | date: '%s'
     -%}
 
-    <link href="{{ site.baseurl }}/assets/favicon.ico" rel="icon">
+    <link href="//{{ site.baseurl }}/assets/favicon.ico" rel="icon">
 
     <!-- https://fonts.google.com/specimen/PT+Sans?query=PT+Sans&selection.family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700 -->
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
 
     <!-- https://getbootstrap.com/docs/ -->
-    <script src="{{ site.baseurl }}/assets/jquery/dist/jquery.min.js"></script>
-    <script src="{{ site.baseurl }}/assets/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ site.baseurl }}/assets/dark-mode-toggler.js"></script>
+    <script src="//{{ site.baseurl }}/assets/jquery/dist/jquery.min.js"></script>
+    <script src="//{{ site.baseurl }}/assets/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="//{{ site.baseurl }}/assets/dark-mode-toggler.js"></script>
 
     <!-- https://bootstrap-table.com/docs/getting-started/introduction/ -->
-    {% comment %} <link href="{{ site.baseurl }}/assets/bootstrap-table/dist/bootstrap-table.min.css" rel="stylesheet">
-    <script src="{{ site.baseurl }}/assets/bootstrap-table/dist/bootstrap-table.min.js"></script> {% endcomment %}
+    {% comment %} <link href="//{{ site.baseurl }}/assets/bootstrap-table/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="//{{ site.baseurl }}/assets/bootstrap-table/dist/bootstrap-table.min.js"></script> {% endcomment %}
     {% comment %} <script
-        src="{{ site.baseurl }}/assets/bootstrap-table/dist/extensions/mobile/bootstrap-table-mobile.min.js"></script> {% endcomment %}
+        src="//{{ site.baseurl }}/assets/bootstrap-table/dist/extensions/mobile/bootstrap-table-mobile.min.js"></script> {% endcomment %}
 
     <!-- https://fontawesome.com/how-to-use/on-the-web/referencing-icons/basic-use -->
     {% if site.cs50.fontawesome %}
     <link crossorigin="anonymous" href="https://kit.fontawesome.com/{{ site.cs50.fontawesome }}.css" rel="stylesheet">
     {% else %}
-    <link href="{{ site.baseurl }}/assets/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="//{{ site.baseurl }}/assets/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
     {% endif %}
 
     <!-- https://moment.github.io/luxon/ -->
-    <script src="{{ site.baseurl }}/assets/luxon/build/global/luxon.min.js"></script>
+    <script src="//{{ site.baseurl }}/assets/luxon/build/global/luxon.min.js"></script>
 
     <!-- http://docs.mathjax.org/ -->
     <!-- http://docs.mathjax.org/en/latest/options/output/chtml.html?highlight=displayAlign#the-configuration-block -->
@@ -53,17 +53,17 @@
             }
         };
     </script>
-    <script src="{{ site.baseurl }}/assets/mathjax/es5/tex-chtml.js?{{ time }}"></script>
+    <script src="//{{ site.baseurl }}/assets/mathjax/es5/tex-chtml.js?{{ time }}"></script>
 
     <!-- https://github.com/verlok/vanilla-lazyload -->
-    <script src="{{ site.baseurl }}/assets/intersection-observer/intersection-observer.js?{{ time }}"></script>
-    <script src="{{ site.baseurl }}/assets/vanilla-lazyload/dist/lazyload.min.js?{{ time }}"></script>
+    <script src="//{{ site.baseurl }}/assets/intersection-observer/intersection-observer.js?{{ time }}"></script>
+    <script src="//{{ site.baseurl }}/assets/vanilla-lazyload/dist/lazyload.min.js?{{ time }}"></script>
 
     <!-- https://github.com/davidjbradshaw/iframe-resizer -->
-    <script src="{{ site.baseurl }}/assets/iframe-resizer/js/iframeResizer.min.js?{{ time }}"></script>
+    <script src="//{{ site.baseurl }}/assets/iframe-resizer/js/iframeResizer.min.js?{{ time }}"></script>
 
     <!-- https://github.com/scratchblocks/scratchblocks/releases -->
-    <script src="{{ site.baseurl }}/assets/scratchblocks.min.js"></script>
+    <script src="//{{ site.baseurl }}/assets/scratchblocks.min.js"></script>
 
     {% if site.algolia -%}
     <!-- Including InstantSearch.js library and styling -->
@@ -75,14 +75,14 @@
     %}
 
     <!-- https://mermaid-js.github.io/ -->
-    <script src="{{ site.baseurl }}/assets/mermaid.min.js?{{ time }}"></script>
+    <script src="//{{ site.baseurl }}/assets/mermaid.min.js?{{ time }}"></script>
 
     <!-- https://github.com/twitter/twemoji -->
-    <script src="{{ site.baseurl }}/assets/twemoji/dist/twemoji.min.js?{{ time }}"></script>
+    <script src="//{{ site.baseurl }}/assets/twemoji/dist/twemoji.min.js?{{ time }}"></script>
 
 
-    <link href="{{ site.baseurl }}/assets/page.css" rel="stylesheet">
-    <script src="{{ site.baseurl }}/assets/jekyll-theme-cs50.js"></script>
+    <link href="//{{ site.baseurl }}/assets/page.css" rel="stylesheet">
+    <script src="//{{ site.baseurl }}/assets/jekyll-theme-cs50.js"></script>
 
     <script>
         window.CS50 = {
@@ -291,7 +291,7 @@
         </script>
         {% endif %}
 
-        <script src="{{ site.baseurl }}/assets/page.js"></script>
+        <script src="//{{ site.baseurl }}/assets/page.js"></script>
 
 </body>
 
