@@ -1,7 +1,8 @@
 // Default font
 $font-family-sans-serif: "PT Sans" !default;
 
-// Crimson links
+// Crimson colors
+$aside-bg: #a51c30 !default; // Custom variable
 $link-color: #a51c30 !default;
 $link-color-dark: #ef9aa4 !default; // Passing lightness of #a51c30 foreground, against #212529 background, per https://webaim.org/resources/contrastchecker/
 $link-hover-color: $link-color !default;
@@ -20,9 +21,6 @@ $headings-font-weight: bold;
 // Dark mode
 // https://getbootstrap.com/docs/5.3/customize/color-modes/#building-with-sass
 $color-mode-type: media-query;
-
-// Custom variable
-$aside-bg: $link-color !default;
 
 // Import Bootstrap
 @import "bootstrap/scss/bootstrap.scss";
