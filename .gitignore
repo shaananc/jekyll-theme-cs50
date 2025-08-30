@@ -53,11 +53,11 @@ assets/@fortawesome/fontawesome-free/css/*
 !assets/@fortawesome/fontawesome-free/css/all.min.css
 !assets/@fortawesome/fontawesome-free/webfonts/
 
-assets/iframe-resizer/*
-!assets/iframe-resizer/LICENSE
-!assets/iframe-resizer/js/
-assets/iframe-resizer/js/*
-!assets/iframe-resizer/js/iframeResizer.min.js
+assets/@iframe-resizer/*
+!assets/@iframe-resizer/parent/
+assets/@iframe-resizer/parent/*
+!assets/iframe-resizer/parent/index.umd.js
+!assets/iframe-resizer/parent/LICENSE
 
 assets/instantsearch.js/*
 !assets/instantsearch.js/LICENSE

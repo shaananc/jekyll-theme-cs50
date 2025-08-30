@@ -592,8 +592,10 @@ $(document).on('DOMContentLoaded', function() {
     $(window).trigger('resize');
 
     // Resize iframes dynamically
-    $('iframe').on('load', function() {
-        $(this).iFrameResize();
+    // https://iframe-resizer.com/licenses/
+    iframeResize({
+        license: 'GPLv3',
+        waitForLoad: true
     });
 
     // Parse emoji
