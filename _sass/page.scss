@@ -70,7 +70,7 @@ aside .btn[data-bs-toggle=modal]:hover {
 // Invert colors when not collapsed
 aside .btn[data-bs-toggle=collapse]:not(.collapsed) {
     background-color: $body-bg;
-    color: $link-color;
+    color: $aside-bg;
 }
 
 aside hr {

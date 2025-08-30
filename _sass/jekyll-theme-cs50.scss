@@ -21,6 +21,12 @@ $headings-font-weight: bold;
 // https://getbootstrap.com/docs/5.3/customize/color-modes/#building-with-sass
 $color-mode-type: media-query;
 
+// Custom colors
+$custom-colors: (
+  "aside-bg": $link-color !default;
+);
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
 // Import Bootstrap
 @import "bootstrap/scss/bootstrap.scss";
 
