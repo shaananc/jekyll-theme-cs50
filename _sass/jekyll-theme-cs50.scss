@@ -2,7 +2,6 @@
 $font-family-sans-serif: "PT Sans" !default;
 
 // Crimson colors
-$aside-bg: #a51c30 !default; // Custom variable
 $link-color: #a51c30 !default;
 $link-color-dark: #ef9aa4 !default; // Passing lightness of #a51c30 foreground, against #212529 background, per https://webaim.org/resources/contrastchecker/
 $link-hover-color: $link-color !default;
@@ -270,8 +269,8 @@ pre code span {
 
 //// alert
 
-// Box shadows
-#alert, aside {
+// Box shadow
+#alert {
     box-shadow: .5rem .5rem 1rem rgba($black, .20); // https://github.com/twbs/bootstrap/blob/master/scss/_variables.scss
 }
 

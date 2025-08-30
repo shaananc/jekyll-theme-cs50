@@ -1,5 +1,8 @@
 @import "jekyll-theme-cs50";
 
+// Custom variable
+$aside-bg: #a51c30 !default;
+
 // Root em
 html {
     font-size: 16px;
@@ -12,7 +15,7 @@ body > div.container-fluid > div.row {
 
 // Crimson background, transparent text
 aside {
-    background-color: $link-color;
+    background-color: $aside-bg;
     color: rgba($body-bg, 0.5);
     font-size: 1.125rem;
 }
@@ -39,6 +42,11 @@ aside a, aside .btn-link {
 // Override column's padding
 aside.col-lg {
     padding: 2rem 2rem;
+}
+
+// Box shadow
+aside {
+    box-shadow: .5rem .5rem 1rem rgba($black, .20); // https://github.com/twbs/bootstrap/blob/master/scss/_variables.scss
 }
 
 // Fixed width, scroll on larger devices
