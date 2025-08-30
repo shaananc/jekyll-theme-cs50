@@ -56,8 +56,8 @@ assets/@fortawesome/fontawesome-free/css/*
 assets/@iframe-resizer/*
 !assets/@iframe-resizer/parent/
 assets/@iframe-resizer/parent/*
-!assets/iframe-resizer/parent/index.umd.js
-!assets/iframe-resizer/parent/LICENSE
+!assets/@iframe-resizer/parent/index.umd.js
+!assets/@iframe-resizer/parent/LICENSE
 
 assets/instantsearch.js/*
 !assets/instantsearch.js/LICENSE
