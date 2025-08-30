@@ -595,7 +595,7 @@ $(document).on('DOMContentLoaded', function() {
     // https://iframe-resizer.com/licenses/
     iframeResize({
         license: 'GPLv3',
-        waitForLoad: true
+        waitForLoad: false
     });
 
     // Parse emoji
