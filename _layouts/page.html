@@ -193,7 +193,7 @@
             $('#search').on('show.bs.modal', function (e) {
 
                 // Client
-                const searchClient = algoliasearch('{{ site.algolia.application_id }}', '{{ site.algolia.search_only_api_key }}');
+                const searchClient = algoliasearch.algoliasearch('{{ site.algolia.application_id }}', '{{ site.algolia.search_only_api_key }}');
                 const search = instantsearch({
                     indexName: '{{ site.algolia.index_name }}',
                     searchClient: searchClient,
