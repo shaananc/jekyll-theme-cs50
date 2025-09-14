@@ -388,6 +388,12 @@ Jekyll::Hooks.register :pages, :pre_render do |page|
     ENV["TZ"] = $site.config["cs50"]["tz"]
   end
 
+  # Trim whitespace from indented conditionals, so that LI tags aren't wrapped with P tags
+  page.content.gsub!(/^(\s+){%\s*(if .*?[^\-])\s*%}(\s*)$/, '\1{% \2 -%}\3')
+  page.content.gsub!(/^(\s+){%\s*(elsif .*?[^\-])\s*%}(\s*)$/, '\1{%- \2 -%}\3')
+  page.content.gsub!(/^(\s+){%\s*(else)\s*%}(\s*)$/, '\1{%- \2 -%}\3')
+  page.content.gsub!(/^(\s+){%\s*(endif)\s*%}(\s*)$/, '\1{%- \2 %}\3')
+
 end
 
 Jekyll::Hooks.register :site, :after_reset do |site|
