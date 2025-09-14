@@ -13,7 +13,6 @@ jobs:
                 ['ai', '2024/x'],
                 ['ai', '2025/fall'],
                 ['ap', '2024'],
-                ['beyond', '2019/x'],
                 ['business', '2017/x'],
                 ['business', '2025/fall'],
                 ['cs50.tf', 'main'],
