@@ -389,10 +389,10 @@ Jekyll::Hooks.register :pages, :pre_render do |page|
   end
 
   # Trim whitespace from indented conditionals, so that LI tags aren't wrapped with P tags
-  page.content.gsub!(/^(\s+){%\s*(if .*?[^\-])\s*%}(\s*)$/, '\1{% \2 -%}\3')
-  page.content.gsub!(/^(\s+){%\s*(elsif .*?[^\-])\s*%}(\s*)$/, '\1{%- \2 -%}\3')
-  page.content.gsub!(/^(\s+){%\s*(else)\s*%}(\s*)$/, '\1{%- \2 -%}\3')
-  page.content.gsub!(/^(\s+){%\s*(endif)\s*%}(\s*)$/, '\1{%- \2 %}\3')
+  page.content = page.content.gsub(/^(\s+){%\s*(if .*?[^\-])\s*%}(\s*)$/, '\1{% \2 -%}\3')
+  page.content = page.content.gsub(/^(\s+){%\s*(elsif .*?[^\-])\s*%}(\s*)$/, '\1{%- \2 -%}\3')
+  page.content = page.content.gsub(/^(\s+){%\s*(else)\s*%}(\s*)$/, '\1{%- \2 -%}\3')
+  page.content = page.content.gsub(/^(\s+){%\s*(endif)\s*%}(\s*)$/, '\1{%- \2 %}\3')
 
 end
 
