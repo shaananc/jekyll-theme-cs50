@@ -124,7 +124,7 @@ module CS50
         Jekyll.logger.debug "CS50: Could not parse HTML with Nokogiri: #{e.message}"
         # Use Sanitize as a safer fallback for HTML stripping
         begin
-          text = Sanitize.fragment(html, :remove_contents => true).strip
+          text = Sanitize.fragment(html, :elements => []).strip
         rescue StandardError => e2
           Jekyll.logger.warn "CS50: Could not sanitize HTML: #{e2.message}"
           # Last resort: just use the raw input
