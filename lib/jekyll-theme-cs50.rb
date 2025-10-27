@@ -102,22 +102,38 @@ module CS50
   # Generate a description from page content
   module DescriptionGenerator
     def generate_description(input, max_length = 160)
-      return "" if input.nil? || input.strip.empty?
+      return "" if input.nil? || input.to_s.strip.empty?
 
-      # Convert markdown to HTML first
-      html = $site.find_converter_instance(::Jekyll::Converters::Markdown).convert(input.to_s) rescue input.to_s
+      # Convert markdown to HTML first if possible
+      begin
+        if defined?($site) && $site
+          html = $site.find_converter_instance(::Jekyll::Converters::Markdown).convert(input.to_s)
+        else
+          html = input.to_s
+        end
+      rescue => e
+        html = input.to_s
+      end
       
       # Parse HTML and extract text
-      doc = Nokogiri::HTML5.fragment(html)
-      text = doc.text.strip
+      begin
+        doc = Nokogiri::HTML5.fragment(html)
+        text = doc.text.strip
+      rescue => e
+        text = html.gsub(/<[^>]*>/, '').strip
+      end
       
       # Clean up whitespace
       text = text.gsub(/\s+/, ' ').strip
       
+      # Return empty string if no text extracted
+      return "" if text.empty?
+      
       # Truncate to max_length, breaking at word boundary
       if text.length > max_length
         text = text[0...(max_length - 3)]
-        text = text[0...text.rindex(' ')] if text.rindex(' ')
+        last_space = text.rindex(' ')
+        text = text[0...last_space] if last_space && last_space > 0
         text += '...'
       end
       
