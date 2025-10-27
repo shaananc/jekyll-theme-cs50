@@ -127,3 +127,5 @@ assets/vanilla-lazyload/dist/*
 !assets/vanilla-lazyload/dist/lazyload.min.js
 
 node_modules/
+
+test_site/
