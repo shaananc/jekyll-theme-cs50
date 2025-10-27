@@ -122,7 +122,14 @@ module CS50
         text = doc.text.strip
       rescue StandardError => e
         Jekyll.logger.debug "CS50: Could not parse HTML with Nokogiri: #{e.message}"
-        text = html.gsub(/<[^>]*>/, '').strip
+        # Use Sanitize as a safer fallback for HTML stripping
+        begin
+          text = Sanitize.fragment(html, :remove_contents => true).strip
+        rescue StandardError => e2
+          Jekyll.logger.warn "CS50: Could not sanitize HTML: #{e2.message}"
+          # Last resort: just use the raw input
+          text = html.to_s.strip
+        end
       end
       
       # Clean up whitespace
