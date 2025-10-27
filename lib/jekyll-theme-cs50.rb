@@ -111,7 +111,8 @@ module CS50
         else
           html = input.to_s
         end
-      rescue => e
+      rescue StandardError => e
+        Jekyll.logger.debug "CS50: Could not convert markdown to HTML: #{e.message}"
         html = input.to_s
       end
       
@@ -119,7 +120,8 @@ module CS50
       begin
         doc = Nokogiri::HTML5.fragment(html)
         text = doc.text.strip
-      rescue => e
+      rescue StandardError => e
+        Jekyll.logger.debug "CS50: Could not parse HTML with Nokogiri: #{e.message}"
         text = html.gsub(/<[^>]*>/, '').strip
       end
       
