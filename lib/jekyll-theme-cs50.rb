@@ -110,12 +110,13 @@ module CS50
       # Parse HTML and extract text
       doc = Nokogiri::HTML5.fragment(html)
       
-      # Remove the page's title (first h1 tag)
+      # Remove the page's title (i.e., first h1 tag)
       doc.css("h1").first&.remove
       
-      # Remove table of contents (first ul with id of markdown-toc)
+      # Remove any table of contents
       doc.css("ul#markdown-toc").first&.remove
       
+      # Strip tags
       text = doc.text.strip
       
       # Clean up whitespace
