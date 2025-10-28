@@ -11,16 +11,16 @@
         <meta content="{{ page.refresh }}" http-equiv="refresh">
         {%- endif -%}
 
-        {%- capture dynamic_description -%}
+        {%- capture description -%}
             {%- if page.description -%}
                 {{- page.description -}}
             {%- elsif page.content -%}
-                {{- page.content | generate_description -}}
+                {{- page.content | describe -}}
             {%- else -%}
                 {{- site.cs50.description -}}
             {%- endif -%}
         {%- endcapture -%}
-        <meta property="og:description" content="{{ dynamic_description | strip }}">
+        <meta property="og:description" content="{{ description | strip }}">
 
         <meta property="og:image" content="{{ page.image | default: site.cs50.image }}">
 

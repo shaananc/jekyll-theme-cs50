@@ -101,39 +101,18 @@ module CS50
 
   # Generate a description from page content
   module DescriptionGenerator
-    def generate_description(input, max_length = 160)
+    def describe(input, max_length = 160)
       return "" if input.nil? || input.to_s.strip.empty?
 
-      # Convert markdown to HTML first if possible
-      begin
-        if defined?($site) && $site
-          html = $site.find_converter_instance(::Jekyll::Converters::Markdown).convert(input.to_s)
-        else
-          html = input.to_s
-        end
-      rescue StandardError => e
-        Jekyll.logger.debug "CS50: Could not convert markdown to HTML: #{e.message}"
-        html = input.to_s
-      end
+      # Convert Markdown to HTML
+      html = $site.find_converter_instance(::Jekyll::Converters::Markdown).convert(input.to_s)
       
       # Parse HTML and extract text
-      begin
-        doc = Nokogiri::HTML5.fragment(html)
-        text = doc.text.strip
-      rescue StandardError => e
-        Jekyll.logger.debug "CS50: Could not parse HTML with Nokogiri: #{e.message}"
-        # Use Sanitize as a safer fallback for HTML stripping
-        begin
-          text = Sanitize.fragment(html, :elements => []).strip
-        rescue StandardError => e2
-          Jekyll.logger.warn "CS50: Could not sanitize HTML: #{e2.message}"
-          # Last resort: just use the raw input
-          text = html.to_s.strip
-        end
-      end
+      doc = Nokogiri::HTML5.fragment(html)
+      text = doc.text.strip
       
       # Clean up whitespace
-      text = text.gsub(/\s+/, ' ').strip
+      text = text.gsub(/\s+/, " ").strip
       
       # Return empty string if no text extracted
       return "" if text.empty?
@@ -141,9 +120,9 @@ module CS50
       # Truncate to max_length, breaking at word boundary
       if text.length > max_length
         text = text[0...(max_length - 3)]
-        last_space = text.rindex(' ')
+        last_space = text.rindex(" ")
         text = text[0...last_space] if last_space && last_space > 0
-        text += '...'
+        text += "..."
       end
       
       text
