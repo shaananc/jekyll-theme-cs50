@@ -1,184 +1,188 @@
 <!DOCTYPE html>
 
-<html lang="{{ page.lang | default: site.lang | default: " en-us " }}" data-bs-theme="auto">
+<html lang="{{ page.lang | default: site.lang | default: "en-us" }}" data-bs-theme="auto">
 
-<head>
+    <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, width=device-width"> {%- if page.refresh -%}
-    <meta content="{{ page.refresh }}" http-equiv="refresh"> {%- endif -%}
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        {%- if page.refresh -%}
+        <meta content="{{ page.refresh }}" http-equiv="refresh">
+        {%- endif -%}
 
-    <meta property="og:description" content="{{ page.description | default: site.cs50.description }}">
+        {%- capture description -%}
+            {%- if page.description -%}
+                {{- page.description -}}
+            {%- elsif page.content -%}
+                {{- page.content | describe -}}
+            {%- else -%}
+                {{- site.cs50.description -}}
+            {%- endif -%}
+        {%- endcapture -%}
+        <meta property="og:description" content="{{ description | strip }}">
 
-    <meta property="og:image" content="{{ page.image | default: site.cs50.image }}"> {%- capture title -%} {%- if
-    page.title -%} {{- page.title -}} {%- endif -%} {%- if site.cs50.title -%} {%- unless site.github and
-    site.cs50.title == site.github.repository_name -%} {%- if page.title %} - {% endif -%} {{- site.cs50.title -}} {%-
-    endunless -%} {%- endif -%} {%- endcapture -%}
+        <meta property="og:image" content="{{ page.image | default: site.cs50.image }}">
 
-    <meta property="og:title" content="{{ title }}"> {% include head.html %} {%- assign time = site.time | date: '%s'
-    -%}
+        {%- capture title -%}
+            {%- if page.title -%}
+                {{- page.title -}}
+            {%- endif -%}
+            {%- if site.cs50.title -%}
+                {%- unless site.github and site.cs50.title == site.github.repository_name -%}
+                    {%- if page.title %} - {% endif -%}
+                    {{- site.cs50.title -}}
+                {%- endunless -%}
+            {%- endif -%}
+        {%- endcapture -%}
 
-    <link href="{{ site.baseurl }}/assets/favicon.ico" rel="icon">
+        <meta property="og:title" content="{{ title }}">
 
-    <!-- https://fonts.google.com/specimen/PT+Sans?query=PT+Sans&selection.family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+        {% include head.html %}
 
-    <!-- https://getbootstrap.com/docs/ -->
-    <script src="{{ site.baseurl }}/assets/jquery/dist/jquery.min.js"></script>
-    <script src="{{ site.baseurl }}/assets/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ site.baseurl }}/assets/dark-mode-toggler.js"></script>
+        {%- assign time = site.time | date: '%s' -%}
+        {%- assign base = site.baseurl | default: "" -%}
 
-    <!-- https://bootstrap-table.com/docs/getting-started/introduction/ -->
-    <link href="{{ site.baseurl }}/assets/bootstrap-table/dist/bootstrap-table.min.css" rel="stylesheet">
-    <script src="{{ site.baseurl }}/assets/bootstrap-table/dist/bootstrap-table.min.js"></script>
-    <script
-        src="{{ site.baseurl }}/assets/bootstrap-table/dist/extensions/mobile/bootstrap-table-mobile.min.js"></script>
+        <link href="{{ base }}/favicon.ico?{{ time }}" rel="icon">
 
-    <!-- https://fontawesome.com/how-to-use/on-the-web/referencing-icons/basic-use -->
-    <link href="{{ site.baseurl }}/assets/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+        <!-- https://fonts.google.com/specimen/PT+Sans?query=PT+Sans&selection.family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700 -->
+        <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
 
-    <!-- https://moment.github.io/luxon/ -->
-    <script src="{{ site.baseurl }}/assets/luxon.min.js"></script>
+        <!-- https://getbootstrap.com/docs/ -->
+        <script src="{{ base }}/assets/jquery/dist/jquery.min.js?{{ time }}"></script>
+        <script src="{{ base }}/assets/bootstrap/dist/js/bootstrap.bundle.min.js?{{ time }}"></script>
+        <script src="{{ base }}/assets/dark-mode-toggler.js?{{ time }}"></script>
 
-    <!-- http://docs.mathjax.org/ -->
-    <!-- https://www.jsdelivr.com/package/npm/mathjax?path=es5 -->
-    <!-- http://docs.mathjax.org/en/latest/options/output/chtml.html?highlight=displayAlign#the-configuration-block -->
-    <script>
-        MathJax = {
-            chtml: {
-                displayAlign: "left"
-            }
-        };
-    </script>
-    <script crossorigin="anonymous" integrity="sha256-z47L98YXVhVIaY0uyDzt675P5Ea+w3RsPh9VD5NuoTY="
-        src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-chtml.js"></script>
+        <!-- https://bootstrap-table.com/docs/getting-started/introduction/ -->
+        <link href="{{ base }}/assets/bootstrap-table/dist/bootstrap-table.min.css?{{ time }}" rel="stylesheet">
+        <script src="{{ base }}/assets/bootstrap-table/dist/bootstrap-table.min.js?{{ time }}"></script>
+        <script src="{{ base }}/assets/bootstrap-table/dist/extensions/mobile/bootstrap-table-mobile.min.js?{{ time }}"></script>
 
-    <!-- https://github.com/verlok/vanilla-lazyload -->
-    <!-- https://www.jsdelivr.com/package/npm/vanilla-lazyload -->
-    <!-- https://www.jsdelivr.com/package/npm/intersection-observer -->
-    <script crossorigin="anonymous" integrity="sha256-v3MXDIY3uujDKO0h37NoglNDp6uwq+4EmM0EkH99Uuo="
-        src="https://cdn.jsdelivr.net/npm/intersection-observer@0.12.2/intersection-observer.js"></script>
-    <script crossorigin="anonymous" integrity="sha256-sO6HPavoXo796Zp/bq6ts4qHOoEqfydXEXSX5NojP48="
-        src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js"></script>
+        <!-- https://fontawesome.com/how-to-use/on-the-web/referencing-icons/basic-use -->
+        {% if site.cs50.fontawesome %}
+        <link crossorigin="anonymous" href="https://kit.fontawesome.com/{{ site.cs50.fontawesome }}.css" rel="stylesheet">
+        {% else %}
+        <link href="{{ base }}/assets/@fortawesome/fontawesome-free/css/all.min.css?{{ time }}" rel="stylesheet">
+        {% endif %}
 
-    <!-- https://github.com/davidjbradshaw/iframe-resizer -->
-    <!-- https://www.jsdelivr.com/package/npm/iframe-resizer?path=js -->
-    <script crossorigin="anonymous" integrity="sha256-oBWDuxBG1C5U0t3xjmZZ1UAlt9sKeSRk26KiVy4jxpY="
-        src="https://cdn.jsdelivr.net/npm/iframe-resizer@4.3.2/js/iframeResizer.min.js"></script>
+        <!-- https://moment.github.io/luxon/ -->
+        <script src="{{ base }}/assets/luxon/build/global/luxon.min.js?{{ time }}"></script>
 
-    <!-- https://github.com/scratchblocks/scratchblocks/releases -->
-    <script src="{{ site.baseurl }}/assets/scratchblocks.min.js"></script>
+        <!-- http://docs.mathjax.org/ -->
+        <!-- http://docs.mathjax.org/en/latest/options/output/chtml.html?highlight=displayAlign#the-configuration-block -->
+        <!-- https://docs.mathjax.org/en/latest/output/fonts.html -->
+        <script>
+            MathJax = {
+                loader: {
+                    paths: {
+                        'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+                    }
+                },
+                output: {
+                    displayAlign: 'left'
+                }
+            };
+        </script>
+        <script src="{{ base }}/assets/mathjax/tex-mml-chtml.js?{{ time }}"></script>
 
-    {% if site.algolia -%}
-    <!-- Including InstantSearch.js library and styling -->
-    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.js"></script>
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch-theme-algolia.min.css"> {%- endif
-    %}
+        <!-- https://github.com/verlok/vanilla-lazyload -->
+        <script src="{{ base }}/assets/intersection-observer/intersection-observer.js?{{ time }}"></script>
+        <script src="{{ base }}/assets/vanilla-lazyload/dist/lazyload.min.js?{{ time }}"></script>
 
-    <!-- https://mermaid-js.github.io/ -->
-    <!-- https://www.jsdelivr.com/package/npm/mermaid -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@9.3.0/dist/mermaid.min.js"
-        integrity="sha256-QdTG1YTLLTwD3b95jLqFxpQX9uYuJMNAtVZgwKX4oYU=" crossorigin="anonymous"></script>
+        <!-- https://iframe-resizer.com/ -->
+        <script src="{{ base }}/assets/@iframe-resizer/parent/index.umd.js?{{ time }}"></script>
+
+        <!-- https://github.com/scratchblocks/scratchblocks/releases -->
+        <script src="{{ base }}/assets/scratchblocks.min.js?{{ time }}"></script>
+
+        <!-- https://mermaid-js.github.io/ -->
+        <script src="{{ base }}/assets/mermaid/dist/mermaid.min.js?{{ time }}"></script>
+
+        <!-- https://github.com/twitter/twemoji -->
+        <script src="{{ base }}/assets/@twemoji/api/dist/twemoji.min.js?{{ time }}"></script>
+
+        {% if site.algolia -%}
+        <!-- https://www.algolia.com/doc/guides/building-search-ui/installation/js/ -->
+        <script src="{{ base }}/assets/algoliasearch/dist/algoliasearch.umd.js?{{ time }}"></script>
+        <script src="{{ base }}/assets/instantsearch.js/dist/instantsearch.production.min.js?{{ time }}"></script>
+        {%- endif %}
+
+        <link href="{{ base }}{{ '/assets/' | append: page.layout | append: '.css' }}?{{ time }}" rel="stylesheet">
+        <script src="{{ base }}/assets/jekyll-theme-cs50.js?{{ time }}"></script>
+
+        <script>
+            window.CS50 = {
+                local: {{ site.cs50.local | jsonify }},
+                locale: {{ site.cs50.locale | jsonify }},
+                tz: {{ site.cs50.tz | jsonify }}
+            };
+        </script>
+
+        <title>{{ title }}</title>
 
 
-    <link href="{{ site.baseurl }}/assets/page.css" rel="stylesheet">
-    <script src="{{ site.baseurl }}/assets/jekyll-theme-cs50.js"></script>
+    </head>
 
-    <script>
-        window.CS50 = {
-            local: {{ site.cs50.local | jsonify }},
-        locale: {{ site.cs50.locale | jsonify }},
-        tz: {{ site.cs50.tz | jsonify }}
-        };
-    </script>
+    <body class="invisible">
 
-    <title>{{ title }}</title>
-
-
-</head>
-
-<body class="invisible">
-
-    <div class="alert fixed-top mb-0 rounded-0 shadow p-0" data-alert="{{ site.cs50.alert }}"
-        data-hash="{{ alert | md5 }}" id="alert" role="alert">
-        <button aria-label="Close" class="btn-close d-none" data-bs-dismiss="alert" type="button"></button>
-        <div style="background-color: #005bbb; height: 29px; text-align:center">
-            <a class="d-block h-100 alert-link" href="https://www.npr.org/2022/02/25/1082992947/ukraine-support-help"
-                style="color: #fff">
-                <i class="fas fa-info-circle" style="margin-top: .33rem"></i>
-            </a>
+        {% if site.cs50.alert %}
+        {%- capture alert -%}{%- include alert.md -%}{%- endcapture -%}
+        <div class="alert fixed-top mb-0 rounded-0" data-alert="{{ site.cs50.alert }}" data-hash="{{ alert | md5 }}" id="alert" role="alert">
+            <button aria-label="Close" class="btn-close d-none" data-bs-dismiss="alert" type="button"></button>
+            {{- alert | markdownify | replace: " id=", " data-id=" | strip -}}
         </div>
+        {% endif %}
 
-        <div style="background-color: #ffd500; height: 29px;">
-            <a class="d-block h-100 alert-link"
-                href="https://www.npr.org/2022/02/25/1082992947/ukraine-support-help"></a>
-        </div>
-    </div>
+        <div class="container-fluid">
 
-    {% if site.cs50.alert %} {%- capture alert -%}{%- include alert.md -%}{%- endcapture -%}
-    <div class="alert fixed-top mb-0 rounded-0 shadow" data-alert="{{ site.cs50.alert }}" data-hash="{{ alert | md5 }}"
-        id="alert" role="alert">
-        <button aria-label="Close" class="btn-close d-none" data-bs-dismiss="alert" type="button"></button> {{- alert |
-        markdownify | replace: " id=", " data-id=" | strip -}}
-    </div>
-    {% endif %}
+            <div class="row">
 
-    <div class="container-fluid">
+                <aside class="col-lg">
 
-        <div class="row">
+                    <header>
 
-            <aside class="col-md" style=" z-index: 1;">
+                        {%- capture header -%}{%- include header.md -%}{%- endcapture -%}
+                        {{- header | markdownify | replace: " id=", " data-id=" | strip -}}
 
-                <header>
+                    </header>
 
-                    {%- capture header -%}{%- include header.md -%}{%- endcapture -%} {{- header | markdownify |
-                    replace: " id=", " data-id=" | strip -}}
+                    {% if site.algolia -%}
+                    <button class="btn btn-link d-block ps-0 pt-0" data-search data-bs-target="#search" data-bs-toggle="modal" type="button">
+                        <i class="fas fa-search pe-2"></i>Search
+                    </button>
+                    {%- endif %}
 
-                </header>
+                    <button aria-controls="nav" aria-expanded="false" class="btn btn-sm collapsed d-lg-none" data-bs-target="aside > nav" data-bs-toggle="collapse">
+                        Menu
+                    </button>
 
-                {% if site.algolia -%}
-                <button class="btn btn-link d-block ps-0 pt-0" data-search data-bs-target="#search"
-                    data-bs-toggle="modal" type="button">
-                    <i class="fas fa-search pe-2"></i>Search
-                </button> {%- endif %}
+                    <nav class="collapse d-lg-block" id="nav">
 
-                <button aria-controls="nav" aria-expanded="false" class="btn btn-sm collapsed d-md-none"
-                    data-bs-target="aside > nav" data-bs-toggle="collapse">
-                    Menu
-                </button>
+                        {%- capture nav -%}{%- include nav.md -%}{%- endcapture -%}
+                        {{- nav | markdownify | replace: " id=", " data-id=" | strip -}}
 
-                <nav class="collapse d-md-block" id="nav">
+                    </nav>
 
-                    {%- capture nav -%}{%- include nav.md -%}{%- endcapture -%} {{- nav | markdownify | replace: " id=",
-                    " data-id=" | strip -}}
+                    <footer>
 
-                </nav>
+                        {%- capture footer -%}{%- include footer.md -%}{%- endcapture -%}
+                        {{- footer | markdownify | replace: " id=", " data-id=" | strip -}}
 
-                <footer>
+                    </footer>
 
-                    {%- capture footer -%}{%- include footer.md -%}{%- endcapture -%} {{- footer | markdownify |
-                    replace: " id=", " data-id=" | strip -}}
+                </aside>
 
-                </footer>
+                <main class="col-lg">
 
-            </aside>
+                    {{ content }}
 
-            <main class="col-md-8 col-12 ">
+                </main>
 
-                {{ content }}
-                <div style="margin-top: 60px;"></div>
-                {%- include copyright.md -%}
-            </main>
-
+            </div>
 
         </div>
 
         {% if site.algolia -%}
-        <div aria-hidden="true" aria-labelledby="searchTitle" class="markdown-body modal" id="search" role="dialog"
-            tabindex="-1">
+        <div aria-hidden="true" aria-labelledby="searchTitle" class="markdown-body modal" id="search" role="dialog" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -194,15 +198,16 @@
             </div>
         </div>
         <script>
-            // Before shwoing searchbox
+
+            // Before showing searchbox
             $('#search').on('show.bs.modal', function (e) {
 
                 // Client
+                const searchClient = algoliasearch.algoliasearch('{{ site.algolia.application_id }}', '{{ site.algolia.search_only_api_key }}');
                 const search = instantsearch({
                     indexName: '{{ site.algolia.index_name }}',
-                    apiKey: '{{ site.algolia.search_only_api_key }}',
-                    appId: '{{ site.algolia.application_id }}',
-                    searchFunction: function (helper) { // https://www.algolia.com/doc/guides/building-search-ui/going-further/conditional-display/js/#handling-empty-queries
+                    searchClient: searchClient,
+                    searchFunction: function(helper) { // https://www.algolia.com/doc/guides/building-search-ui/going-further/conditional-display/js/#handling-empty-queries
                         const hits = $('#hits');
                         if (helper.state.query === '') {
                             hits.hide();
@@ -224,8 +229,7 @@
                         placeholder: 'Search',
                         showLoadingIndicator: false,
                         showReset: false,
-                        showSubmit: false,
-                        poweredBy: true
+                        showSubmit: false
                     })
                 );
 
@@ -235,12 +239,13 @@
                     instantsearch.widgets.hits({
                         container: '#hits',
                         templates: {
-                            item: function (hit) {
+                            item: function(hit) {
 
                                 // url
                                 if (window.baseurl) {
                                     var url = window.baseurl + hit.url;
-                                } else {
+                                }
+                                else {
                                     var url = hit.url;
                                 }
                                 if (hit.anchor) {
@@ -250,50 +255,56 @@
                                 // title
                                 if (hit._highlightResult && hit._highlightResult.headings) {
                                     var title = hit._highlightResult.headings[hit._highlightResult.headings.length - 1].value;
-                                } else if (hit._highlightResult && hit._highlightResult.title) {
+                                }
+                                else if (hit._highlightResult && hit._highlightResult.title) {
                                     var title = hit._highlightResult.title.value;
-                                } else if (hit.headings && hit.headings.length > 0) {
+                                }
+                                else if (hit.headings) {
                                     var title = hit.headings[hit.headings.length - 1].value;
-                                } else if (hit.title) {
+                                }
+                                else if (hit.title) {
                                     var title = hit.title;
-                                } else {
+                                }
+                                else {
                                     var title = url;
                                 }
 
                                 // content
                                 if (hit._highlightResult && hit._highlightResult.content) {
                                     var content = hit._highlightResult.content.value;
-                                } else if (hit._highlightResult && hit._highlightResult.title) {
+                                }
+                                else if (hit._highlightResult && hit._highlightResult.title) {
                                     var content = hit._highlightResult.title.value;
-                                } else {
+                                }
+                                else {
                                     var content = hit.excerpt_text;
                                 }
 
                                 // Template for hit
                                 return '<h2 class="font-weight-bold h3 mb-0">' +
-                                    '<a href="' + url + '">' +
-                                    title +
-                                    '</a>' +
-                                    '</h2>' +
-                                    '<p class="mb-0">' +
-                                    '<a class="text-muted" href="' + url + '">' +
-                                    url +
-                                    '</a>' +
-                                    '</p>' +
-                                    '<p>' +
-                                    content +
-                                    '</p>';
+                                       '<a href="' + url + '">' +
+                                       title +
+                                       '</a>' +
+                                       '</h2>' +
+                                       '<p class="mb-0">' +
+                                       '<a class="text-muted" href="' + url + '">' +
+                                       url +
+                                       '</a>' +
+                                       '</p>' +
+                                       '<p>' + 
+                                       content +
+                                       '</p>';
                             }
                         }
                     })
                 );
 
-                // // poweredBy
-                // search.addWidget(
-                //     instantsearch.widgets.poweredBy({
-                //         container: '#search .modal-footer'
-                //     })
-                // );
+                // poweredBy
+                search.addWidget(
+                    instantsearch.widgets.poweredBy({
+                        container: '#search .modal-footer'
+                    })
+                );
 
                 // Let user start searching
                 search.start();
@@ -306,11 +317,12 @@
             $('#search').on('shown.bs.modal', function (e) {
                 $('#searchbox input[type=search]').focus();
             });
+
         </script>
         {% endif %}
 
-        <script src="{{ site.baseurl }}/assets/page.js"></script>
+        <script src="{{ base }}/assets/page.js?{{ time }}"></script>
 
-</body>
+    </body>
 
 </html>
