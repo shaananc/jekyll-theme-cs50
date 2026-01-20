@@ -22,7 +22,7 @@ _site/
 assets/algoliasearch/*
 !assets/algoliasearch/dist/
 assets/algoliasearch/dist/*
-!assets/algoliasearch/dist/algoliasearch-lite.umd.js
+!assets/algoliasearch/dist/algoliasearch.umd.js
 
 assets/bootstrap/*
 !assets/bootstrap/LICENSE
@@ -53,11 +53,11 @@ assets/@fortawesome/fontawesome-free/css/*
 !assets/@fortawesome/fontawesome-free/css/all.min.css
 !assets/@fortawesome/fontawesome-free/webfonts/
 
-assets/iframe-resizer/*
-!assets/iframe-resizer/LICENSE
-!assets/iframe-resizer/js/
-assets/iframe-resizer/js/*
-!assets/iframe-resizer/js/iframeResizer.min.js
+assets/@iframe-resizer/*
+!assets/@iframe-resizer/parent/
+assets/@iframe-resizer/parent/*
+!assets/@iframe-resizer/parent/index.umd.js
+!assets/@iframe-resizer/parent/LICENSE
 
 assets/instantsearch.js/*
 !assets/instantsearch.js/LICENSE
@@ -86,18 +86,18 @@ assets/luxon/build/global/*
 
 assets/mathjax/*
 !assets/mathjax/LICENSE
-!assets/mathjax/es5/
-assets/mathjax/es5/*
-!assets/mathjax/es5/tex-chtml.js
-!assets/mathjax/es5/output/
-assets/mathjax/es5/output/*
-!assets/mathjax/es5/output/chtml/
-assets/mathjax/es5/output/chtml/*
-!assets/mathjax/es5/output/chtml/fonts/
-assets/mathjax/es5/output/chtml/fonts/*
-!assets/mathjax/es5/output/chtml/fonts/woff-v2/
-assets/mathjax/es5/output/chtml/fonts/woff-v2/*
-!assets/mathjax/es5/output/chtml/fonts/woff-v2/*.woff
+!assets/mathjax/tex-mml-chtml.js
+!assets/mathjax/sre/
+assets/mathjax/sre/*
+!assets/mathjax/sre/speech-worker.js
+!assets/mathjax/sre/mathmaps/
+assets/@mathjax/*
+!assets/@mathjax/mathjax-newcm-font/
+assets/@mathjax/mathjax-newcm-font/*
+!assets/@mathjax/mathjax-newcm-font/chtml/
+assets/@mathjax/mathjax-newcm-font/chtml/*
+!assets/@mathjax/mathjax-newcm-font/chtml/dynamic/
+!assets/@mathjax/mathjax-newcm-font/chtml/woff2/
 
 assets/mermaid/*
 !assets/mermaid/package.json
@@ -112,11 +112,13 @@ assets/popper.js/dist/*
 assets/popper.js/dist/umd/*
 !assets/popper.js/dist/umd/popper.min.js
 
-assets/twemoji/*
-!assets/twemoji/LICENSE
-!assets/twemoji/dist/
-assets/twemoji/dist/*
-!assets/twemoji/dist/twemoji.min.js
+assets/@twemoji/*
+!assets/@twemoji/api/
+assets/@twemoji/api/*
+!assets/@twemoji/api/LICENSE
+!assets/@twemoji/api/dist/
+assets/@twemoji/api/dist/*
+!assets/@twemoji/api/dist/twemoji.min.js
 
 assets/vanilla-lazyload/*
 !assets/vanilla-lazyload/LICENSE

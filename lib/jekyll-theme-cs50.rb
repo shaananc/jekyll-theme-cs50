@@ -3,8 +3,10 @@ require "deep_merge"
 require "digest/md5"
 require "jekyll"
 require "jekyll-redirect-from"
+require "json"
 require "kramdown/parser/gfm"
 require "kramdown/parser/kramdown/link"
+require "net/http"
 require "pathname"
 require "sanitize"
 require "time"
@@ -178,6 +180,67 @@ module CS50
     Liquid::Template.register_tag("before", self)
 
   end
+
+  class AlbumTag < Tag
+
+    def render(context)
+      super
+
+      # Parse URL 
+      begin
+        album_uri = URI(@args[0])
+        raise unless album_uri.is_a?(URI::HTTP) || album_uri.is_a?(URI::HTTPS)
+        album = album_uri.path.split("/")[1]
+      rescue
+        raise "Invalid album URL: #{@args[0]}"
+      end
+
+      # Check for API key
+      if $site.config["cs50"]["smugmug"].nil? || $site.config["cs50"]["smugmug"].empty?
+        raise "Missing API key for SmugMug" 
+      end
+
+      # Get album's AlbumKey
+      begin
+        api_uri = URI("https://api.smugmug.com/api/v2!weburilookup")
+        api_uri.query = URI.encode_www_form({
+          "APIKey" => $site.config["cs50"]["smugmug"],
+          "WebUri" => URI::HTTPS.build(:host => album_uri.host, :path => "/#{album}")
+        })
+        http = Net::HTTP.new(api_uri.host, api_uri.port)
+        http.use_ssl = true
+        request = Net::HTTP::Get.new(api_uri.request_uri)
+        request["Accept"] = "application/json"
+        response = http.request(request)
+        raise unless response.is_a?(Net::HTTPSuccess)
+        data = JSON.parse(response.body)
+        album_key = data["Response"]["Album"]["AlbumKey"]
+      rescue
+        raise "Could not GET album's AlbumKey from API"
+      end
+
+      # Build embeddable URL
+      components = {
+        "autoStart" => "1",
+        "captions" => "0",
+        "key" => album_key,
+        "navigation" => "0",
+        "playButton" => "0",
+        "randomize" => "1",
+        "speed" => "3",
+        "transition" => "fade",
+        "transitionSpeed" => "2"
+      }
+      src = URI::HTTPS.build(:host => album_uri.host, :path => "/frame/slideshow", :query => URI.encode_www_form(components))
+
+      # Return HTML
+      return "<iframe src='#{src}'></iframe>"
+    end
+
+    Liquid::Template.register_tag("album", self)
+
+  end
+
 
   class AlertBlock < Block
 
@@ -388,6 +451,12 @@ Jekyll::Hooks.register :pages, :pre_render do |page|
     ENV["TZ"] = $site.config["cs50"]["tz"]
   end
 
+  # Trim whitespace from indented conditionals, so that LI tags aren't wrapped with P tags
+  page.content = page.content.gsub(/^(\s+){%\s*(if .*?[^\-])\s*%}(\s*)$/, '\1{% \2 -%}\3')
+  page.content = page.content.gsub(/^(\s+){%\s*(elsif .*?[^\-])\s*%}(\s*)$/, '\1{%- \2 -%}\3')
+  page.content = page.content.gsub(/^(\s+){%\s*(else)\s*%}(\s*)$/, '\1{%- \2 -%}\3')
+  page.content = page.content.gsub(/^(\s+){%\s*(endif)\s*%}(\s*)$/, '\1{%- \2 %}\3')
+
 end
 
 Jekyll::Hooks.register :site, :after_reset do |site|
@@ -423,6 +492,62 @@ Jekyll::Hooks.register :site, :pre_render do |site, payload|
     end
   rescue
   end
+end
+
+Jekyll::Hooks.register [:pages], :post_render do |page|
+
+  # Skip if not HTML
+  next if page.output_ext != ".html"
+
+  # Parse HTML
+  doc = Nokogiri::HTML(page.output)
+
+  # Get copy of main
+  main = doc.at_css("main").dup
+  next if main.nil?
+
+  # If page.description
+  if page.data.key?("description")
+    description = page.data["description"]
+
+  # Else infer
+  else
+
+    # Remove the page's title (i.e., first h1 tag)
+    main.css("h1").first&.remove
+        
+    # Remove any table of contents
+    main.css("ul#markdown-toc").first&.remove
+        
+    # Remove any spoilers
+    main.css("details")&.remove
+        
+    # Strip tags
+    text = main.text.strip
+
+    # Clean up whitespace
+    text = text.gsub(/\s+/, " ").strip
+      
+    # Truncate to max_length, breaking at word boundary
+    max_length = 160
+    if text.length > max_length
+      description = text[0...(max_length - 3)]
+      last_space = description .rindex(" ")
+      description = description[0...last_space] if last_space && last_space > 0
+      description += "..."
+    end
+  end
+
+  # Inject description
+  head = doc.at_css("head")
+  next if head.nil?
+  meta = Nokogiri::XML::Node.new("meta", doc)
+  meta["property"] = "og:description"
+  meta["content"] = CGI.escapeHTML(description.to_s)
+  head.add_child(meta)
+
+  # Update HTML
+  page.output = doc.to_html
 end
 
 Jekyll::Hooks.register [:site], :post_render do |site|
@@ -576,11 +701,15 @@ module Kramdown
         current_link = @tree.children.select{ |element| [:a].include?(element.type) }.last
         unless current_link.nil? 
 
-          # If inline link ends with .md
-          if match = current_link.attr["href"].match(/\A([^\s]*)\.md(\s*.*)\z/)
+          # If a relative link
+          if !current_link.attr["href"].start_with?("https://", "http://")
+          
+            # If link ends with .md
+            if match = current_link.attr["href"].match(/\A([^\s]*)\.md(\s*.*)\z/)
 
-            # Rewrite as /, just as jekyll-relative-links does
-            current_link.attr["href"] = match.captures[0] + "/" + match.captures[1]
+              # Rewrite as /, just as jekyll-relative-links does
+              current_link.attr["href"] = match.captures[0] + "/" + match.captures[1]
+            end
           end
         end
       end
