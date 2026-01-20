@@ -4,7 +4,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Re-deploy dependents
-        if: ${{ github.ref == 'refs/heads/develop' }}
+        if: ${{ github.ref == 'refs/heads/develop' && secrets.DEPLOY50_PAT != '' }}
         uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.DEPLOY50_PAT }}
