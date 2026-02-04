@@ -451,16 +451,18 @@ $(document).on('DOMContentLoaded', function() {
         init();
     })();
 
-    // Render Scratch blocks
-    scratchblocks.renderMatching('pre code.language-scratch', {
-        scale: 0.675,
-        style: 'scratch3'
-    });
+    // Render Scratch blocks (guarded to avoid errors if scratchblocks isn't loaded)
+    if (window.scratchblocks && typeof window.scratchblocks.renderMatching === 'function') {
+        window.scratchblocks.renderMatching('pre code.language-scratch', {
+            scale: 0.675,
+            style: 'scratch3'
+        });
 
-    // Remove PRE wrapper, since not actually preformatted text
-    $('pre code.language-scratch').each(function(index, element) {
-        $(element).parent().replaceWith($(element).children());
-    });
+        // Remove PRE wrapper, since not actually preformatted text
+        $('pre code.language-scratch').each(function(index, element) {
+            $(element).parent().replaceWith($(element).children());
+        });
+    }
 
     // Get headings
     const headings = $([

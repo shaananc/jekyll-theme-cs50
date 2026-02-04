@@ -94,7 +94,7 @@
         {%- endif %}
 
         <link href="{{ '/assets/' | append: page.layout | append: '.css' | relative_url }}?{{ time }}" rel="stylesheet">
-        <script src="{{ '/assets/jekyll-theme-cs50.js' | relative_url }}?{{ time }}"></script>
+        <script src="{{ '/assets/jekyll-theme-cs50.js' | relative_url }}?{{ time }}" defer></script>
 
         <script>
             window.CS50 = {
