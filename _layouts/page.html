@@ -10,6 +10,12 @@
         {%- if page.refresh %}
         <meta content="{{ page.refresh }}" http-equiv="refresh">
         {%- endif %}
+        {%- if page.url == "/" and site.baseurl == "" and site.root_version %}
+        <meta http-equiv="refresh" content="0; url=/{{ site.root_version }}/">
+        <script>
+          window.location.href = "/{{ site.root_version }}/";
+        </script>
+        {%- endif %}
 
         <meta property="og:image" content="{{ page.image | default: site.cs50.image }}">
 
@@ -27,34 +33,51 @@
 
         <meta property="og:title" content="{{ title }}">
 
+        {%- unless site.theme == "canvas-jekyll-theme" -%}
         {% include head.html %}
+        {%- endunless -%}
 
         {%- assign time = site.time | date: '%s' -%}
+        {%- assign needs_mathjax = false -%}
+        {%- assign needs_mermaid = false -%}
+        {%- assign needs_scratchblocks = false -%}
+        {%- if content contains '$$' or content contains '\(' or content contains '\[' -%}
+            {%- assign needs_mathjax = true -%}
+        {%- endif -%}
+        {%- if content contains 'language-mermaid' or content contains 'class="mermaid"' -%}
+            {%- assign needs_mermaid = true -%}
+        {%- endif -%}
+        {%- if content contains 'language-scratchblocks' or content contains 'scratchblocks' -%}
+            {%- assign needs_scratchblocks = true -%}
+        {%- endif -%}
 
-        <link href="/favicon.ico?{{ time }}" rel="icon">
+        <link href="{{ '/favicon.ico' | relative_url }}?{{ time }}" rel="icon">
 
         <!-- https://fonts.google.com/specimen/PT+Sans?query=PT+Sans&selection.family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700 -->
         <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
 
         <!-- https://getbootstrap.com/docs/ -->
-        <script src="{{ '/assets/jquery/dist/jquery.min.js' | relative_url }}?{{ time }}"></script>
-        <script src="{{ '/assets/bootstrap/dist/js/bootstrap.bundle.min.js' | relative_url }}?{{ time }}"></script>
+        <script src="{{ '/assets/' | relative_url }}jquery/dist/jquery.min.js?{{ time }}"></script>
+        <script src="{{ '/assets/' | relative_url }}bootstrap/dist/js/bootstrap.bundle.min.js?{{ time }}"></script>
+        <script src="{{ '/assets/' | relative_url }}retro-theme.js?{{ time }}"></script>
+        <script src="{{ '/assets/' | relative_url }}dark-mode-toggler.js?{{ time }}"></script>
 
         <!-- https://bootstrap-table.com/docs/getting-started/introduction/ -->
-        <link href="{{ '/assets/bootstrap-table/dist/bootstrap-table.min.css' | relative_url }}?{{ time }}" rel="stylesheet">
-        <script src="{{ '/assets/bootstrap-table/dist/bootstrap-table.min.js' | relative_url }}?{{ time }}"></script>
-        <script src="{{ '/assets/bootstrap-table/dist/extensions/mobile/bootstrap-table-mobile.min.js' | relative_url }}?{{ time }}"></script>
+        <link href="{{ '/assets/' | relative_url }}bootstrap-table/dist/bootstrap-table.min.css?{{ time }}" rel="stylesheet">
+        <script src="{{ '/assets/' | relative_url }}bootstrap-table/dist/bootstrap-table.min.js?{{ time }}"></script>
+        <script src="{{ '/assets/' | relative_url }}bootstrap-table/dist/extensions/mobile/bootstrap-table-mobile.min.js?{{ time }}"></script>
 
         <!-- https://fontawesome.com/how-to-use/on-the-web/referencing-icons/basic-use -->
         {% if site.cs50.fontawesome %}
         <link crossorigin="anonymous" href="https://kit.fontawesome.com/{{ site.cs50.fontawesome }}.css" rel="stylesheet">
         {% else %}
-        <link href="{{ '/assets/@fortawesome/fontawesome-free/css/all.min.css' | relative_url }}?{{ time }}" rel="stylesheet">
+        <link href="{{ '/assets/' | relative_url }}@fortawesome/fontawesome-free/css/all.min.css?{{ time }}" rel="stylesheet">
         {% endif %}
 
         <!-- https://moment.github.io/luxon/ -->
-        <script src="{{ '/assets/luxon/build/global/luxon.min.js' | relative_url }}?{{ time }}"></script>
+        <script src="{{ '/assets/' | relative_url }}luxon/build/global/luxon.min.js?{{ time }}"></script>
 
+        {% if needs_mathjax %}
         <!-- http://docs.mathjax.org/ -->
         <!-- http://docs.mathjax.org/en/latest/options/output/chtml.html?highlight=displayAlign#the-configuration-block -->
         <!-- https://docs.mathjax.org/en/latest/output/fonts.html -->
@@ -70,31 +93,41 @@
                 }
             };
         </script>
-        <script src="{{ '/assets/mathjax/tex-mml-chtml.js' | relative_url }}?{{ time }}"></script>
+        <script src="{{ '/assets/' | relative_url }}mathjax/tex-mml-chtml.js?{{ time }}" defer></script>
+        {% endif %}
 
         <!-- https://github.com/verlok/vanilla-lazyload -->
-        <script src="{{ '/assets/vanilla-lazyload/dist/lazyload.min.js' | relative_url }}?{{ time }}"></script>
+        <script src="{{ '/assets/' | relative_url }}vanilla-lazyload/dist/lazyload.min.js?{{ time }}"></script>
 
+        {% if content contains "video.cs50.io" or content contains "cs50vidcont" %}
         <!-- https://iframe-resizer.com/ -->
-        <script src="{{ '/assets/@iframe-resizer/parent/index.umd.js' | relative_url }}?{{ time }}"></script>
+        <script src="{{ '/assets/' | relative_url }}@iframe-resizer/parent/index.umd.js?{{ time }}"></script>
+        {% endif %}
 
+        {% if needs_scratchblocks %}
         <!-- https://github.com/scratchblocks/scratchblocks/releases -->
-        <script src="{{ '/assets/scratchblocks.min.js' | relative_url }}?{{ time }}"></script>
+        <script src="{{ '/assets/' | relative_url }}scratchblocks.min.js?{{ time }}" defer></script>
+        {% endif %}
 
+        {% if needs_mermaid %}
         <!-- https://mermaid-js.github.io/ -->
-        <script src="{{ '/assets/mermaid/dist/mermaid.min.js' | relative_url }}?{{ time }}"></script>
+        <script src="{{ '/assets/' | relative_url }}mermaid/dist/mermaid.min.js?{{ time }}" defer></script>
+        {% endif %}
 
         <!-- https://github.com/twitter/twemoji -->
-        <script src="{{ '/assets/@twemoji/api/dist/twemoji.min.js' | relative_url }}?{{ time }}"></script>
+        <script src="{{ '/assets/' | relative_url }}@twemoji/api/dist/twemoji.min.js?{{ time }}"></script>
 
         {% if site.algolia -%}
         <!-- https://www.algolia.com/doc/guides/building-search-ui/installation/js/ -->
-        <script src="{{ '/assets/algoliasearch/dist/algoliasearch.umd.js' | relative_url }}?{{ time }}"></script>
-        <script src="{{ '/assets/instantsearch.js/dist/instantsearch.production.min.js' | relative_url }}?{{ time }}"></script>
         {%- endif %}
 
         <link href="{{ '/assets/' | append: page.layout | append: '.css' | relative_url }}?{{ time }}" rel="stylesheet">
-        <script src="{{ '/assets/jekyll-theme-cs50.js' | relative_url }}?{{ time }}" defer></script>
+        <script src="{{ '/assets/' | relative_url }}jekyll-theme-cs50.js?{{ time }}" defer></script>
+        <script src="{{ '/assets/' | relative_url }}jump-strip.js?{{ time }}"></script>
+        <script src="{{ '/assets/' | relative_url }}foa-hover.js?{{ time }}"></script>
+        {% if site.sso %}
+        <script src="{{ '/assets/' | relative_url }}sso-link-rewrite.js?{{ time }}"></script>
+        {% endif %}
 
         <script>
             window.CS50 = {
@@ -109,7 +142,8 @@
 
     </head>
 
-    <body class="invisible">
+    {% assign term_slug = site.data.year.year | append: site.data.year.semester %}
+    <body class="invisible" data-asset-base="{{ '/assets' | relative_url }}"{% if site.sso %} data-public-base="{{ site.data.year.public_domain }}/{{ term_slug }}" data-sso-base="{{ site.data.year.sso_domain }}/{{ site.data.year.course_slug }}/{{ term_slug }}"{% endif %}>
 
         {% if site.cs50.alert %}
         {%- capture alert -%}{%- include alert.md -%}{%- endcapture -%}
@@ -123,11 +157,11 @@
 
             <div class="row">
 
-                <aside class="col-lg">
+                                <aside class="col-lg">
  
                     <header>
 
-                        {%- capture header -%}{%- include header.md -%}{%- endcapture -%}
+                        {%- capture header -%}{%- include layout/header.md -%}{%- endcapture -%}
                         {{- header | markdownify | replace: " id=", " data-id=" | strip -}}
 
                     </header>
@@ -144,23 +178,30 @@
 
                     <nav class="collapse d-lg-block" id="nav">
 
-                        {%- capture nav -%}{%- include nav.md -%}{%- endcapture -%}
-                        {{- nav | markdownify | replace: " id=", " data-id=" | strip -}}
+                        {%- include nav/nav.html -%}
 
                     </nav>
 
                     <footer>
 
-                        {%- capture footer -%}{%- include footer.md -%}{%- endcapture -%}
+                        {%- capture footer -%}{%- include layout/footer.md -%}{%- endcapture -%}
                         {{- footer | markdownify | replace: " id=", " data-id=" | strip -}}
 
                     </footer>
 
                 </aside>
-
+                
                 <main class="col-lg">
+                    {% if page.jump_strip %}
+                    <div class="jump-strip-wrapper" data-jump-strip-wrapper>
+                        <nav class="jump-strip jump-strip--{{ page.jump_strip_source | default: 'headings' }}" data-jump-strip data-jump-source="{{ page.jump_strip_source | default: 'headings' }}" hidden>
+                            <span class="jump-strip__label">Jump to</span>
+                            <div class="jump-strip__items" data-jump-strip-items></div>
+                        </nav>
+                    </div>
+                    {% endif %}
 
-                    {{ content }}
+                    {% include layout/sso-gate.html %}
 
                 </main>
 
@@ -186,8 +227,28 @@
         </div>
         <script>
 
-            // Before showing searchbox
-            $('#search').on('show.bs.modal', function (e) {
+            const loadScript = (src) => new Promise((resolve, reject) => {
+                const existing = document.querySelector(`script[src="${src}"]`);
+                if (existing) {
+                    resolve();
+                    return;
+                }
+                const script = document.createElement('script');
+                script.src = src;
+                script.async = true;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+
+            let searchLoaded = false;
+            let searchInitialized = false;
+
+            const initSearch = () => {
+                if (searchInitialized) {
+                    return;
+                }
+                searchInitialized = true;
 
                 // Client
                 const searchClient = algoliasearch.algoliasearch('{{ site.algolia.application_id }}', '{{ site.algolia.search_only_api_key }}');
@@ -278,7 +339,7 @@
                                        url +
                                        '</a>' +
                                        '</p>' +
-                                       '<p>' + 
+                                       '<p>' +
                                        content +
                                        '</p>';
                             }
@@ -295,20 +356,76 @@
 
                 // Let user start searching
                 search.start();
+            };
+
+            // Before showing searchbox
+            $('#search').on('show.bs.modal', async function () {
+                if (!searchLoaded) {
+                    try {
+                        await loadScript('{{ '/assets/' | relative_url }}algoliasearch/dist/algoliasearch.umd.js?{{ time }}');
+                        await loadScript('{{ '/assets/' | relative_url }}instantsearch.js/dist/instantsearch.production.min.js?{{ time }}');
+                        searchLoaded = true;
+                    }
+                    catch (err) {
+                        console.error('Search scripts failed to load', err);
+                        return;
+                    }
+                }
+                initSearch();
 
                 // Resize form
                 $(window).trigger('resize');
             });
 
             // After showing searchbox
-            $('#search').on('shown.bs.modal', function (e) {
+            $('#search').on('shown.bs.modal', function () {
                 $('#searchbox input[type=search]').focus();
             });
 
         </script>
         {% endif %}
+
+        <script>
+            (function() {
+                const navGroups = document.querySelectorAll('details.nav-group');
+                if (!navGroups.length) {
+                    return;
+                }
+                const desktopQuery = window.matchMedia('(min-width: 992px)');
+                const setGroupState = () => {
+                    navGroups.forEach((group) => {
+                        if (group.dataset.userToggled === 'true') {
+                            return;
+                        }
+                        group.open = desktopQuery.matches;
+                    });
+                };
+                navGroups.forEach((group) => {
+                    group.addEventListener('toggle', () => {
+                        group.dataset.userToggled = 'true';
+                    });
+                });
+                setGroupState();
+                if (desktopQuery.addEventListener) {
+                    desktopQuery.addEventListener('change', setGroupState);
+                } else if (desktopQuery.addListener) {
+                    desktopQuery.addListener(setGroupState);
+                }
+            })();
+        </script>
+
+        <script>
+            window.addEventListener('load', () => {
+                if (window.mermaid) {
+                    mermaid.initialize({ startOnLoad: true });
+                }
+                if (window.scratchblocks) {
+                    scratchblocks.renderMatching('pre code.language-scratchblocks, .scratchblocks');
+                }
+            });
+        </script>
  
-        <script src="{{ '/assets/page.js' | relative_url }}?{{ time }}"></script>
+        <script src="{{ '/assets/' | relative_url }}page.js?{{ time }}"></script>
 
     </body>
 
