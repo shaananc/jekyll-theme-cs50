@@ -182,12 +182,14 @@
 
                     </nav>
 
-                    <footer>
+                    {%- if site.theme == "canvas-jekyll-theme" -%}
+                    <footer class="d-none d-lg-block">
 
                         {%- capture footer -%}{%- include layout/footer.md -%}{%- endcapture -%}
                         {{- footer | markdownify | replace: " id=", " data-id=" | strip -}}
 
                     </footer>
+                    {%- endif -%}
 
                 </aside>
                 
@@ -203,7 +205,23 @@
 
                     {% include layout/sso-gate.html %}
 
+                    {%- unless site.theme == "canvas-jekyll-theme" -%}
+                    <footer class="site-footer-wrapper mt-5">
+                        {%- capture footer -%}{%- include layout/footer.md -%}{%- endcapture -%}
+                        {{- footer | markdownify | replace: " id=", " data-id=" | strip -}}
+                    </footer>
+                    {%- endunless -%}
+
                 </main>
+
+                {%- if site.theme == "canvas-jekyll-theme" -%}
+                <footer class="col-12 d-lg-none site-footer-wrapper">
+
+                    {%- capture footer -%}{%- include layout/footer.md -%}{%- endcapture -%}
+                    {{- footer | markdownify | replace: " id=", " data-id=" | strip -}}
+
+                </footer>
+                {%- endif -%}
 
             </div>
 
