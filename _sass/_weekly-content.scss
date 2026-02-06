@@ -1,0 +1,137 @@
+.weekly-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.weekly-content__hero {
+  padding: 1.5rem 1.75rem;
+  border-radius: 1rem;
+  background: var(--surface-2);
+  border: 1px solid var(--surface-3);
+}
+
+.weekly-content__kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--schedule-card-muted);
+  margin: 0 0 0.35rem;
+}
+
+.weekly-content__title {
+  font-size: clamp(1.7rem, 2.1rem, 2.4rem);
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.weekly-content__subtitle {
+  font-size: clamp(1rem, 1.1rem, 1.25rem);
+  color: var(--schedule-card-muted);
+  font-weight: 600;
+}
+
+.weekly-content__meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.weekly-content__card {
+  background: var(--surface-1);
+  border: 1px solid var(--surface-3);
+  border-radius: 0.9rem;
+  padding: 1rem 1.1rem;
+  box-shadow: var(--card-shadow);
+}
+
+.weekly-content__card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+.weekly-content__card-text {
+  margin: 0;
+  color: var(--body-color);
+  line-height: 1.45;
+}
+
+.weekly-content__card-links {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.weekly-content__card-muted {
+  color: var(--schedule-card-muted);
+}
+
+.weekly-content__section-title {
+  font-size: 1.2rem;
+  margin: 0 0 0.75rem;
+}
+
+.weekly-content__accordion .accordion-item {
+  border-radius: 0.9rem;
+  overflow: hidden;
+  border: 1px solid var(--surface-3);
+  background: var(--surface-1);
+  box-shadow: var(--card-shadow);
+  margin-bottom: 0.85rem;
+}
+
+.weekly-content__accordion .accordion-button {
+  font-weight: 600;
+  background: var(--surface-2);
+}
+
+.weekly-content__accordion .accordion-button:not(.collapsed) {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.weekly-content__accordion .accordion-body {
+  background: var(--surface-1);
+}
+
+.weekly-content__videos-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.weekly-content__video-card {
+  background: var(--surface-1);
+  border: 1px solid var(--surface-3);
+  border-radius: 1rem;
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+
+.weekly-content__video-head {
+  padding: 0.85rem 1.1rem;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--surface-3);
+}
+
+.weekly-content__video-title {
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.weekly-content__video-body {
+  padding: 0.5rem 1.1rem 1rem;
+}
+
+.weekly-content__empty {
+  margin: 0;
+  padding: 1rem 1.2rem;
+  border-radius: 0.75rem;
+  background: var(--surface-2);
+  border: 1px dashed var(--surface-3);
+  color: var(--schedule-card-muted);
+}

@@ -1,0 +1,149 @@
+.workshop-table {
+  --workshop-border: rgba(148, 163, 184, 0.35);
+  --workshop-head-bg: rgba(15, 23, 42, 0.08);
+  --workshop-row-alt: rgba(148, 163, 184, 0.12);
+  --workshop-row-hover: rgba(59, 130, 246, 0.12);
+  --workshop-head-text: var(--body-color);
+  border-radius: 0.9rem;
+  overflow: hidden;
+  border: 1px solid var(--workshop-border);
+}
+
+.workshop-table thead th {
+  background: var(--workshop-head-bg) !important;
+  color: var(--workshop-head-text) !important;
+  border-bottom: 1px solid var(--workshop-border);
+}
+
+.workshop-table tbody tr:nth-child(2n) {
+  background: var(--workshop-row-alt);
+}
+
+.workshop-table tbody tr:hover {
+  background: var(--workshop-row-hover);
+}
+
+.workshop-table a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.workshop-table a:hover,
+.workshop-table a:focus-visible {
+  color: var(--accent);
+  text-decoration-thickness: 2px;
+}
+
+.lecture-block {
+  border: 1px solid var(--workshop-border);
+  border-radius: 0.9rem;
+  padding: 0.75rem 1rem;
+  margin: 0.6rem 0 1rem;
+  background: rgba(15, 23, 42, 0.05);
+}
+
+.lecture-list {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.lecture-item {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.lecture-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: rgba(71, 85, 105, 0.85);
+}
+
+.lecture-time {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.lecture-location {
+  color: rgba(71, 85, 105, 0.95);
+  font-weight: 500;
+}
+
+.lecture-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.workshop-table td,
+.workshop-table th {
+  border-color: var(--workshop-border);
+  vertical-align: middle;
+}
+
+.workshop-time {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.calendar-links {
+  display: inline-flex;
+  gap: 0.35rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  font-size: 0.8rem;
+}
+
+.workshop-time:hover .calendar-links,
+.workshop-time:focus-within .calendar-links {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.calendar-link {
+  border-radius: 999px;
+  padding: 0.1rem 0.45rem;
+  background: rgba(59, 130, 246, 0.12);
+  color: inherit;
+  text-decoration: none;
+}
+
+.calendar-link:hover {
+  background: rgba(59, 130, 246, 0.22);
+}
+
+html[data-bs-theme="dark"] .workshop-table,
+body[data-bs-theme="dark"] .workshop-table {
+  --workshop-border: rgba(148, 163, 184, 0.3);
+  --workshop-head-bg: rgba(30, 41, 59, 0.92);
+  --workshop-row-alt: rgba(30, 41, 59, 0.55);
+  --workshop-row-hover: rgba(56, 189, 248, 0.18);
+  --workshop-head-text: #e2e8f0;
+}
+
+html[data-bs-theme="dark"] .calendar-link,
+body[data-bs-theme="dark"] .calendar-link {
+  background: rgba(56, 189, 248, 0.2);
+}
+
+html[data-bs-theme="dark"] .lecture-block,
+body[data-bs-theme="dark"] .lecture-block {
+  background: rgba(30, 41, 59, 0.65);
+}
+
+html[data-bs-theme="dark"] .lecture-kicker,
+body[data-bs-theme="dark"] .lecture-kicker {
+  color: rgba(148, 163, 184, 0.9);
+}
+
+html[data-bs-theme="dark"] .lecture-location,
+body[data-bs-theme="dark"] .lecture-location {
+  color: rgba(226, 232, 240, 0.85);
+}
