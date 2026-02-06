@@ -595,10 +595,46 @@ $(document).on('DOMContentLoaded', function() {
 
     // Resize iframes dynamically
     // https://iframe-resizer.com/licenses/
-    iframeResize({
-        license: 'GPLv3',
-        waitForLoad: false
-    });
+    //
+    // The theme layout only includes the iframe-resizer parent library on pages
+    // that embed CS50 content. However, this theme can be used on pages that
+    // have other iframes too (e.g. YouTube), so we defensively load the parent
+    // library on-demand when needed.
+    (function () {
+        const hasIframes = document.querySelector('iframe') !== null;
+        if (!hasIframes) {
+            return;
+        }
+
+        function init() {
+            if (typeof iframeResize !== 'function') {
+                return;
+            }
+            iframeResize({
+                license: 'GPLv3',
+                waitForLoad: false
+            });
+        }
+
+        if (typeof iframeResize === 'function') {
+            init();
+            return;
+        }
+
+        const assetBase = (document.body && document.body.dataset && document.body.dataset.assetBase) ? document.body.dataset.assetBase : '/assets';
+        const src = assetBase.replace(/\/$/, '') + '/@iframe-resizer/parent/index.umd.js';
+
+        const s = document.createElement('script');
+        s.src = src;
+        s.async = true;
+        s.onload = init;
+        s.onerror = function () {
+            // If loading fails, don't break the rest of the theme.
+            // eslint-disable-next-line no-console
+            console.warn('Failed to load iframe-resizer parent script:', src);
+        };
+        document.head.appendChild(s);
+    })();
 
     // Parse emoji
     // https://github.com/twitter/twemoji/issues/580#issuecomment-1376299586
