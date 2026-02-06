@@ -601,10 +601,12 @@ $(document).on('DOMContentLoaded', function() {
     // have other iframes too (e.g. YouTube), so we defensively load the parent
     // library on-demand when needed.
     (function () {
-        const hasIframes = document.querySelector('iframe') !== null;
-        if (!hasIframes) {
-            return;
-        }
+        // Only initialise iframe-resizer for CS50 video embeds.
+        // Using iframe-resizer against arbitrary third-party iframes (e.g. YouTube)
+        // can produce noisy warnings and isn't needed.
+        const targetSelector = 'iframe.cs50vidcont, iframe[src*="video.cs50.io"]';
+        const hasTargets = document.querySelector(targetSelector) !== null;
+        if (!hasTargets) return;
 
         function init() {
             if (typeof iframeResize !== 'function') {
@@ -613,7 +615,7 @@ $(document).on('DOMContentLoaded', function() {
             iframeResize({
                 license: 'GPLv3',
                 waitForLoad: false
-            });
+            }, targetSelector);
         }
 
         if (typeof iframeResize === 'function') {
